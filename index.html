@@ -23,13 +23,34 @@
       text-align: center;
       cursor: var(--cursor-heart);
       user-select: none;
+      overflow-x: hidden;
     }
 
     body:active {
       cursor: var(--cursor-error);
     }
 
-    /* RETRO MARQUEE & HEADER */
+    .rave-active {
+      animation: raveBkg 0.15s infinite alternate !important;
+    }
+
+    @keyframes raveBkg {
+      0% { background-color: #ff00ff; }
+      33% { background-color: #00ffff; }
+      66% { background-color: #ffff00; }
+      100% { background-color: #ff0000; }
+    }
+
+    .shake-active {
+      animation: screenShake 0.05s infinite alternate;
+    }
+
+    @keyframes screenShake {
+      0% { transform: translate(3px, 3px); }
+      100% { transform: translate(-3px, -3px); }
+    }
+
+    /* HEADER */
     .header-box {
       background: #ffff00;
       color: #ff0000;
@@ -53,7 +74,7 @@
       100% { color: #0000ff; text-shadow: -2px -2px #ffff00; }
     }
 
-    /* GEO-CITIES TABLE CONTAINER */
+    /* MAIN CONTAINER */
     .main-frame {
       width: 100%;
       max-width: 820px;
@@ -87,23 +108,20 @@
     }
 
     .blurred {
-      filter: blur(18px) contrast(200%);
+      filter: blur(20px) contrast(200%);
     }
 
-    /* 90S WINDOWS POPUP STYLES */
+    /* 90S WINDOWS POPUPS */
     .win-popup {
       display: none;
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       background: #c0c0c0;
       color: #000;
       border: 4px outset #ffffff;
       padding: 4px;
       z-index: 99999;
       box-shadow: 8px 8px 0px #000;
-      width: 310px;
+      width: 280px;
       text-align: left;
     }
 
@@ -112,14 +130,14 @@
       color: #ffffff;
       padding: 3px 6px;
       font-weight: bold;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .win-body {
-      padding: 15px;
+      padding: 12px;
       text-align: center;
       font-family: "Courier New", monospace;
     }
@@ -148,15 +166,25 @@
     .btn-cyan { background: #00ffff; }
     .btn-pink { background: #ff00ff; color: #fff; }
     .btn-red { background: #ff0000; color: #fff; }
+    .btn-green { background: #00ff00; color: #000; }
 
-    /* PARTICLE OVERLAYS */
+    /* FLOATING PARTICLES & 20X TIMMY BURD */
     .particle {
       position: fixed;
-      width: 65px;
-      height: 65px;
       pointer-events: none;
       z-index: 88888;
-      animation: floatUp 1s forwards;
+      animation: floatUp 1.2s forwards;
+    }
+
+    .timmy-pop {
+      position: fixed;
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border: 3px solid #ffff00;
+      z-index: 90000;
+      pointer-events: none;
+      animation: popZoom 2.5s forwards;
     }
 
     @keyframes floatUp {
@@ -165,9 +193,15 @@
       100% { transform: scale(1.8) rotate(360deg) translateY(-80px); opacity: 0; }
     }
 
-    /* EMOJI PICKER GUESTBOOK */
+    @keyframes popZoom {
+      0% { transform: scale(0.1) rotate(0deg); opacity: 1; }
+      50% { transform: scale(1.4) rotate(20deg); opacity: 1; }
+      100% { transform: scale(1) rotate(-10deg) translateY(100px); opacity: 0; }
+    }
+
+    /* EMOJI GUESTBOOK */
     .emoji-btn {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       padding: 4px 8px;
       margin: 2px;
       border: 2px outset #ffffff;
@@ -181,7 +215,7 @@
       padding: 8px;
       margin-top: 8px;
       text-align: left;
-      max-height: 120px;
+      max-height: 100px;
       overflow-y: scroll;
     }
   </style>
@@ -189,47 +223,60 @@
 <body>
 
   <!-- AUDIO TRACKS -->
-  <audio id="audioJungle" src="cute.mp3" loop></audio>
-  <audio id="audioSon" src="My%20cute%20son.mp3" loop></audio>
+  <audio id="audioMain" src="My%20cute%20son.mp3" loop></audio>
+  <audio id="audioCute" src="cute.mp3" loop></audio>
 
-  <!-- WINDOWS 95 STYLE ERROR POPUP -->
-  <div id="retroModal" class="win-popup">
+  <!-- WINDOWS 95 RETRO PREVIEW MODAL -->
+  <div id="previewModal" class="win-popup" style="top:50%; left:50%; transform:translate(-50%, -50%);">
     <div class="win-titlebar">
-      <span>SYSTEM WARNING 0x99</span>
-      <button onclick="closeModal()" style="background:#c0c0c0; border:1px outset #fff; font-weight:bold; cursor:pointer;">X</button>
+      <span>PREVIEW_UNLOCK.EXE</span>
+      <button onclick="closePreviewModal()" style="background:#c0c0c0; border:1px outset #fff; font-weight:bold; cursor:pointer;">X</button>
     </div>
     <div class="win-body">
-      <p id="modalMsg" style="color:#000; font-weight:bold; margin-bottom:12px;"></p>
-      <img id="modalImg" src="IMG_9518.jpeg" style="width:140px; height:140px; border:2px inset #000; object-fit:cover; display:none; margin:0 auto 10px auto;">
-      <button class="retro-btn" onclick="closeModal()">OK / DISMISS</button>
+      <p style="color:#000; font-weight:bold; margin-bottom:8px; font-size:0.85rem;">🚨 MILKY ROBINSON PREVIEW 🚨</p>
+      <img src="IMG_9518.jpeg" style="width:120px; height:120px; border:2px inset #000; object-fit:cover; display:block; margin:0 auto 8px auto;">
+      <button class="retro-btn btn-red" onclick="closePreviewModal()">CLOSE & RE-BLUR</button>
+    </div>
+  </div>
+
+  <!-- SPAM POPUP TEMPLATE -->
+  <div id="spamModal" class="win-popup" style="display:none;">
+    <div class="win-titlebar">
+      <span id="spamTitle">SYSTEM WARNING</span>
+      <button onclick="closeSpam()" style="background:#c0c0c0; border:1px outset #fff; font-weight:bold; cursor:pointer;">X</button>
+    </div>
+    <div class="win-body">
+      <p id="spamText" style="color:#ff0000; font-weight:bold; margin-bottom:10px; font-size:0.9rem;"></p>
+      <button class="retro-btn btn-yellow" onclick="closeSpam()">CLAIM NOW</button>
     </div>
   </div>
 
   <div class="header-box">
-    <h1 class="flash-title" onclick="clickEgg('header')">★ MY CUTE SON OFFICIAL ★</h1>
+    <h1 class="flash-title" onclick="triggerSpam('LOCAL CUTE SON DETECTED IN YOUR AREA!')">★ MY CUTE SON OFFICIAL ★</h1>
     <marquee style="background:#000; color:#00ff00; font-weight:bold; padding:2px;">
-      💥 WARNING: ENTERING JUNGLE AUDIO ZONE *** CLICK ANYWHERE TO START MUSIC *** TIMMY BURD IS THE CUTE SON *** DO NOT CLICK THE BUTTON ***
+      💥 AUTO-AUDIO ACTIVE *** CLICK ANYWHERE TO START MUSIC *** TIMMY BURD IS THE CUTE SON *** DO NOT CLICK THE BUTTON ***
     </marquee>
   </div>
 
   <table class="main-frame">
     <tr>
       <td>
-        <!-- SYSTEM STATUS BAR -->
+        <!-- STATUS BAR -->
         <div style="background:#222; padding:6px; border-bottom:2px ridge #00ffff;">
           <span style="background:red; color:white; padding:3px 6px; font-weight:bold;">
-            📟 VISITORS: <span id="counter">000420</span>
+            📟 GLOBAL VISITORS: <span id="counter">LOADING...</span>
           </span>
-          <span style="color:yellow; margin-left:10px; font-size:0.9rem;">
-            CURRENT MODE: <b id="modeLabel" style="color:cyan;">JUNGLE BEAT</b>
+          <span style="color:yellow; margin-left:10px; font-size:0.85rem;">
+            TRACKING: <b id="trackLabel" style="color:cyan;">MY CUTE SON.MP3</b>
           </span>
         </div>
 
-        <!-- SOUNDBOARD CONTROLS -->
+        <!-- AUDIO & RAVE SOUNDBOARD -->
         <div style="padding:10px; background:#110022; border-bottom:2px dashed #ff00ff;">
-          <button class="retro-btn btn-yellow" onclick="setAudioMode('jungle')">🌴 JUNGLE MODE</button>
-          <button class="retro-btn btn-cyan" onclick="setAudioMode('son')">🔊 BLAST MY CUTE SON</button>
-          <button class="retro-btn btn-red" onclick="muteAllAudio()">🔇 MASTER MUTE</button>
+          <button class="retro-btn btn-yellow" onclick="playDefaultTrack()">🔊 MY CUTE SON</button>
+          <button id="cuteTrackBtn" class="retro-btn btn-cyan" onclick="playCuteTrack()">🎵 CUTE.MP3 (LOCKED)</button>
+          <button class="retro-btn btn-pink" onclick="toggleRaveMode()">🪩 RAVE MODE</button>
+          <button class="retro-btn btn-red" onclick="muteAudio()">🔇 MUTE</button>
         </div>
 
         <!-- CUTE SON SHOWCASE -->
@@ -237,7 +284,7 @@
           <!-- TIMMY BURD -->
           <div class="son-card">
             <h3 style="color:yellow; margin:0 0 5px 0;">CUTE SON OF THE WEEK</h3>
-            <img src="IMG_9494.jpeg" class="son-pic" alt="Timmy Burd" onclick="clickEgg('timmy')">
+            <img src="IMG_9494.jpeg" class="son-pic" alt="Timmy Burd" onclick="triggerSpam('WARNING: TOO MUCH CUTENESS ON PORT 80!')">
             <p style="color:#ff00ff; font-weight:bold; margin:5px 0 0 0;">
               YOU ARE THE CUTE SON! YOU ARE TIMMY BURD!
             </p>
@@ -246,10 +293,10 @@
           <!-- MILKY ROBINSON -->
           <div class="son-card">
             <h3 style="color:cyan; margin:0 0 5px 0;">NEXT WEEK'S SON</h3>
-            <img id="milkyImg" src="IMG_9518.jpeg" class="son-pic blurred" alt="Milky Robinson" onclick="clickEgg('milky')">
+            <img id="milkyImg" src="IMG_9518.jpeg" class="son-pic blurred" alt="Milky Robinson" onclick="triggerSpam('MILKY ROBINSON IS WATCHING YOU...')">
             <p style="color:cyan; font-weight:bold; margin:5px 0;">MILKY ROBINSON</p>
             <button class="retro-btn btn-red" onclick="clickDoNotClick()">
-              DO NOT CLICK (<span id="dncCount">10</span> left)
+              DO NOT CLICK (<span id="dncCount">15</span> left)
             </button>
           </div>
         </div>
@@ -257,22 +304,21 @@
         <!-- REWARD ACTION BUTTONS -->
         <div style="padding:10px; background:#220011; border-top:2px ridge #00ff00;">
           <button class="retro-btn btn-pink" onclick="triggerHeart(event)">💖 HEARTS (<span id="hNum">0</span>)</button>
-          <button class="retro-btn btn-cyan" onclick="triggerFart(event)">💨 FARTS (<span id="fNum">0</span>)</button>
+          <button class="retro-btn btn-green" onclick="triggerFart(event)">💨 FARTS (<span id="fNum">0</span>)</button>
         </div>
 
         <!-- INTERACTIVE BANNER -->
         <div style="background:#000; color:#00ff00; padding:8px; border:2px dashed #ffff00; margin:10px;">
           🎯 EASTER EGGS UNLOCKED: <span id="eggCount" style="color:cyan;">0</span> / 5
           <div id="statusBanner" style="color:yellow; font-size:0.85rem; margin-top:4px;">
-            Click hidden elements across the screen!
+            Click hidden areas to unleash 90s party popups!
           </div>
         </div>
 
-        <!-- EMOJI REACTIONS GUESTBOOK -->
+        <!-- EMOJI GUESTBOOK -->
         <div style="background:#050515; padding:10px; text-align:left;">
           <h4 style="color:yellow; margin:0 0 5px 0;">✏️ STICKER REACTION GUESTBOOK</h4>
           <div>
-            <span style="font-size:0.85rem; color:#fff;">Pick a reaction:</span><br>
             <button class="emoji-btn" onclick="addEmojiReaction('🚽')">🚽</button>
             <button class="emoji-btn" onclick="addEmojiReaction('💨')">💨</button>
             <button class="emoji-btn" onclick="addEmojiReaction('🥩')">🥩</button>
@@ -282,56 +328,80 @@
           </div>
           <div id="gbWall" class="guestbook-wall"></div>
         </div>
+
+        <!-- WEIRD BOTTOM BUTTON: 20X TIMMY BURD -->
+        <div style="padding:15px; background:#ff0000; border-top:4px outset #ffff00; margin-top:10px;">
+          <button class="retro-btn btn-yellow" style="font-size:1.1rem; padding:10px;" onclick="spawn20TimmyBurds()">
+            ⚠️ DO NOT PRESS: RELEASE 20 CUTE SONS ⚠️
+          </button>
+        </div>
       </td>
     </tr>
   </table>
 
 <script>
-  // AUDIO ELEMENTS
-  const jungleTrack = document.getElementById('audioJungle');
-  const sonTrack = document.getElementById('audioSon');
-  let audioInitialized = false;
+  // AUDIO CONTROLS
+  const mainTrack = document.getElementById('audioMain');
+  const cuteTrack = document.getElementById('audioCute');
+  let audioInit = false;
+  let cuteUnlocked = false;
 
-  // INITIALIZE JUNGLE AUDIO ON FIRST CLICK ANYWHERE
+  // AUTOMATIC DEFAULT AUDIO PLAYBACK ON FIRST INTERACTION
   document.body.addEventListener('click', () => {
-    if (!audioInitialized) {
-      audioInitialized = true;
-      jungleTrack.play().catch(() => {});
+    if (!audioInit) {
+      audioInit = true;
+      try { mainTrack.play(); } catch(e) {}
     }
   }, { once: true });
 
-  function setAudioMode(mode) {
-    jungleTrack.pause();
-    sonTrack.pause();
+  function playDefaultTrack() {
+    try {
+      cuteTrack.pause();
+      mainTrack.currentTime = 0;
+      mainTrack.play();
+      document.getElementById('trackLabel').innerText = "MY CUTE SON.MP3";
+    } catch(e) {}
+  }
 
-    if (mode === 'jungle') {
-      jungleTrack.currentTime = 0;
-      jungleTrack.play().catch(() => popAlert("Click somewhere on page first to start music!"));
-      document.getElementById('modeLabel').innerText = "JUNGLE BEAT";
-    } else if (mode === 'son') {
-      sonTrack.currentTime = 0;
-      sonTrack.play().catch(() => popAlert("Click somewhere on page first to start music!"));
-      document.getElementById('modeLabel').innerText = "MY CUTE SON";
+  function playCuteTrack() {
+    if (!cuteUnlocked) {
+      triggerSpam("CUTE.MP3 IS LOCKED! REACH 10 FARTS OR 12 HEARTS TO UNLOCK!");
+      return;
     }
+    try {
+      mainTrack.pause();
+      cuteTrack.currentTime = 0;
+      cuteTrack.play();
+      document.getElementById('trackLabel').innerText = "CUTE.MP3";
+    } catch(e) {}
   }
 
-  function muteAllAudio() {
-    jungleTrack.pause();
-    sonTrack.pause();
-    document.getElementById('modeLabel').innerText = "MUTED";
-    synthFart();
-    popAlert("🔇 MASTER MUTE ACTIVATED! SHUTTING DOWN AUDIO SYSTEM!");
+  function unlockCuteTrack() {
+    cuteUnlocked = true;
+    document.getElementById('cuteTrackBtn').innerText = "🎵 BLAST CUTE.MP3";
+    document.getElementById('cuteTrackBtn').classList.remove('btn-cyan');
+    document.getElementById('cuteTrackBtn').classList.add('btn-yellow');
+    playCuteTrack();
   }
 
-  // RETRO POPUP DIALOGS
-  function popAlert(msg, showImg = false) {
-    document.getElementById('modalMsg').innerText = msg;
-    document.getElementById('modalImg').style.display = showImg ? 'block' : 'none';
-    document.getElementById('retroModal').style.display = 'block';
+  function muteAudio() {
+    try {
+      mainTrack.pause();
+      cuteTrack.pause();
+      document.getElementById('trackLabel').innerText = "MUTED";
+      synthFart();
+    } catch(e) {}
   }
 
-  function closeModal() {
-    document.getElementById('retroModal').style.display = 'none';
+  // RAVE MODE
+  let raveOn = false;
+  function toggleRaveMode() {
+    raveOn = !raveOn;
+    document.body.classList.toggle('rave-active', raveOn);
+    if (raveOn) {
+      unlockCuteTrack();
+      synthBeep(1200);
+    }
   }
 
   // SYNTH SOUND EFFECTS
@@ -352,13 +422,13 @@
     } catch(e) {}
   }
 
-  function synthBeep() {
+  function synthBeep(freq = 880) {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(880, ctx.currentTime);
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
       gain.gain.setValueAtTime(0.1, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.12);
       osc.connect(gain);
@@ -368,7 +438,7 @@
     } catch(e) {}
   }
 
-  // PNG PARTICLE SPAWNER
+  // PARTICLES
   const HEART_PNG = "pngtree-smooth-glossy-heart-vector-file-ai-and-png-y315-10332808.png";
   const FART_PNG = "Unique-Fart-Cloud-Concept-PNG.png";
 
@@ -376,96 +446,143 @@
     const img = document.createElement('img');
     img.src = src;
     img.className = 'particle';
+    img.style.width = '65px';
+    img.style.height = '65px';
     img.style.left = (x || Math.random() * (window.innerWidth - 70)) + 'px';
     img.style.top = (y || Math.random() * (window.innerHeight - 70)) + 'px';
     img.onerror = () => img.remove();
     document.body.appendChild(img);
-    setTimeout(() => img.remove(), 1000);
+    setTimeout(() => img.remove(), 1200);
   }
 
-  // COUNTERS & MESSAGES
-  let heartCount = 0;
-  let fartCount = 0;
+  // HEARTS & FARTS
+  let hearts = 0;
+  let farts = 0;
 
   function triggerHeart(e) {
-    heartCount++;
-    document.getElementById('hNum').innerText = heartCount;
+    hearts++;
+    document.getElementById('hNum').innerText = hearts;
     synthBeep();
     spawnPNG(HEART_PNG, e.clientX, e.clientY);
 
-    if (heartCount % 12 === 0) {
+    if (hearts % 12 === 0) {
       document.getElementById('statusBanner').innerText = "💖 6x2= 12 hearts for you my cute boy";
-      popAlert("💖 ALERT: 6x2= 12 hearts for you my cute boy!");
+      triggerSpam("💖 UNLOCKED: 6x2= 12 hearts for you my cute boy! CUTE.MP3 UNLOCKED!");
+      unlockCuteTrack();
       for (let i = 0; i < 12; i++) {
-        setTimeout(() => { synthBeep(); spawnPNG(HEART_PNG); }, i * 100);
+        setTimeout(() => { synthBeep(900 + i * 50); spawnPNG(HEART_PNG); }, i * 100);
       }
     }
   }
 
   function triggerFart(e) {
-    fartCount++;
-    document.getElementById('fNum').innerText = fartCount;
+    farts++;
+    document.getElementById('fNum').innerText = farts;
     synthFart();
     spawnPNG(FART_PNG, e.clientX, e.clientY);
 
-    if (fartCount % 10 === 0) {
+    if (farts % 10 === 0) {
       document.getElementById('statusBanner').innerText = "💨 5x2= 10 Farts for you my cute boy!";
-      popAlert("💨 CRITICAL FART OVERFLOW: 5x2= 10 Farts for you my cute boy!");
+      triggerSpam("💨 GUT REACTION OVERFLOW: 5x2= 10 Farts for you my cute boy! CUTE.MP3 UNLOCKED!");
+      unlockCuteTrack();
+      document.body.classList.add('shake-active');
+      setTimeout(() => document.body.classList.remove('shake-active'), 1500);
       for (let i = 0; i < 10; i++) {
         setTimeout(() => { synthFart(); spawnPNG(FART_PNG); }, i * 120);
       }
     }
   }
 
-  // UNLOCK MECHANIC
-  let dncLeft = 10;
+  // 15-CLICK MILKY ROBINSON UNLOCK & RE-BLUR
+  let dncLeft = 15;
   function clickDoNotClick() {
     if (dncLeft > 1) {
       dncLeft--;
       document.getElementById('dncCount').innerText = dncLeft;
-      synthBeep();
+      synthBeep(400 + (15 - dncLeft) * 40);
     } else {
       document.getElementById('dncCount').innerText = 0;
       document.getElementById('milkyImg').classList.remove('blurred');
-      popAlert("🚨 CONGRATS! YOU UNLOCKED MILKY ROBINSON (NEXT WEEK'S SON)!", true);
-      clickEgg('dnc');
+      document.getElementById('previewModal').style.display = 'block';
+      synthFart();
     }
   }
 
-  // SECRET EASTER EGGS
-  let foundEggs = new Set();
-  function clickEgg(id) {
-    if (!foundEggs.has(id)) {
-      foundEggs.add(id);
-      document.getElementById('eggCount').innerText = foundEggs.size;
-      synthBeep();
-      if (foundEggs.size === 5) {
-        popAlert("🎉 UNBELIEVABLE! ALL 5 SECRET EASTER EGGS FOUND! YOU ARE THE ULTIMATE CUTE BOY!");
-      }
+  function closePreviewModal() {
+    document.getElementById('previewModal').style.display = 'none';
+    document.getElementById('milkyImg').classList.add('blurred');
+    dncLeft = 15;
+    document.getElementById('dncCount').innerText = dncLeft;
+  }
+
+  // SPAM POPUP SYSTEM
+  function triggerSpam(msg) {
+    document.getElementById('spamText').innerText = msg;
+    const modal = document.getElementById('spamModal');
+    modal.style.top = Math.floor(Math.random() * 40 + 20) + '%';
+    modal.style.left = Math.floor(Math.random() * 40 + 20) + '%';
+    modal.style.display = 'block';
+    synthBeep(1100);
+  }
+
+  function closeSpam() {
+    document.getElementById('spamModal').style.display = 'none';
+  }
+
+  // 20X TIMMY BURD SPAWNER
+  function spawn20TimmyBurds() {
+    synthFart();
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        const img = document.createElement('img');
+        img.src = "IMG_9494.jpeg";
+        img.className = 'timmy-pop';
+        img.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+        img.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+        img.onerror = () => img.remove();
+        document.body.appendChild(img);
+        synthBeep(600 + i * 30);
+        setTimeout(() => img.remove(), 2500);
+      }, i * 80);
     }
   }
 
-  // EMOJI REACTION GUESTBOOK
+  // EMOJI GUESTBOOK
   function addEmojiReaction(emoji) {
     const list = JSON.parse(localStorage.getItem('mcs_emojis') || '[]');
     list.unshift({ emoji, time: new Date().toLocaleTimeString() });
     localStorage.setItem('mcs_emojis', JSON.stringify(list));
     renderGuestbook();
-    clickEgg('gb');
   }
 
   function renderGuestbook() {
-    const list = JSON.parse(localStorage.getItem('mcs_emojis') || '[{"emoji":"🚽","time":"1999-12-31"},{"emoji":"💨","time":"1999-12-31"}]');
+    const list = JSON.parse(localStorage.getItem('mcs_emojis') || '[{"emoji":"🚽"},{"emoji":"💨"}]');
     document.getElementById('gbWall').innerHTML = list.map(item => `
-      <span style="font-size:1.4rem; margin-right:6px;" title="${item.time}">${item.emoji}</span>
+      <span style="font-size:1.3rem; margin-right:5px;">${item.emoji}</span>
     `).join('');
+  }
+
+  // GLOBAL HIT COUNTER API
+  async function updateHitCounter() {
+    const counterEl = document.getElementById('counter');
+    try {
+      const res = await fetch('https://api.countapi.xyz/hit/mycuteson.com/visits');
+      const data = await res.json();
+      if (data && data.value) {
+        counterEl.innerText = String(data.value).padStart(6, '0');
+      } else {
+        throw new Error();
+      }
+    } catch (e) {
+      let hits = parseInt(localStorage.getItem('mcs_hits') || '420') + 1;
+      localStorage.setItem('mcs_hits', hits);
+      counterEl.innerText = String(hits).padStart(6, '0');
+    }
   }
 
   window.onload = () => {
     renderGuestbook();
-    let hits = parseInt(localStorage.getItem('mcs_hits') || '420') + 1;
-    localStorage.setItem('mcs_hits', hits);
-    document.getElementById('counter').innerText = String(hits).padStart(6, '0');
+    updateHitCounter();
   };
 </script>
 </body>
