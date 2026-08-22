@@ -45,8 +45,8 @@
     }
 
     @keyframes screenShake {
-      0% { transform: translate(4px, 4px); }
-      100% { transform: translate(-4px, -4px); }
+      0% { transform: translate(6px, 6px); }
+      100% { transform: translate(-6px, -6px); }
     }
 
     .header-box {
@@ -96,6 +96,19 @@
       padding: 10px;
       width: 280px;
       box-shadow: 4px 4px 0px #00ff00;
+      transition: all 0.2s ease;
+    }
+
+    .son-card-highlight {
+      border: 6px solid #00ffff !important;
+      background: #ff00ff !important;
+      box-shadow: 0 0 25px #ffff00, 0 0 15px #00ff00 !important;
+      animation: flashHighlight 0.2s infinite alternate !important;
+    }
+
+    @keyframes flashHighlight {
+      0% { transform: scale(1.05) rotate(-2deg); }
+      100% { transform: scale(1.05) rotate(2deg); }
     }
 
     .son-pic {
@@ -178,10 +191,25 @@
       width: 90px;
       height: 90px;
       object-fit: cover;
-      border: 3px solid #ffff00;
+      border: 3px solid #ff0000;
+      filter: invert(30%) contrast(200%);
       z-index: 90000;
       pointer-events: none;
-      animation: popZoom 2.5s forwards;
+      animation: popZoom 2s forwards;
+    }
+
+    #scaryFollower {
+      position: fixed;
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border: 3px solid #ff0000;
+      filter: invert(100%) hue-rotate(180deg) contrast(200%);
+      z-index: 999999;
+      pointer-events: none;
+      display: none;
+      box-shadow: 0 0 15px #ff0000;
+      transform: translate(-50%, -50%);
     }
 
     @keyframes floatUp {
@@ -214,6 +242,17 @@
       max-height: 100px;
       overflow-y: scroll;
     }
+
+    .secret-trigger {
+      display: inline-block;
+      font-size: 0.7rem;
+      color: #333;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+    .secret-trigger:hover {
+      color: #ff00ff;
+    }
   </style>
 </head>
 <body>
@@ -221,6 +260,9 @@
   <!-- AUDIO ELEMENTS -->
   <audio id="audioMain" src="My%20cute%20son.mp3" loop></audio>
   <audio id="audioCute" src="cute.mp3" loop></audio>
+
+  <!-- SCARY FOLLOWER IMAGE -->
+  <img id="scaryFollower" src="IMG_9494.jpeg" alt="Scary Timmy Burd">
 
   <!-- WINDOWS 95 RETRO PREVIEW MODAL -->
   <div id="previewModal" class="win-popup" style="top:50%; left:50%; transform:translate(-50%, -50%);">
@@ -250,7 +292,7 @@
   <div class="header-box">
     <h1 class="flash-title" onclick="triggerSpam('LOCAL CUTE SON DETECTED IN YOUR AREA!')">★ MY CUTE SON OFFICIAL ★</h1>
     <marquee style="background:#000; color:#00ff00; font-weight:bold; padding:2px;">
-      💥 AUTO-AUDIO ACTIVE *** CLICK ANYWHERE TO START MUSIC *** TIMMY BURD IS THE CUTE SON *** DO NOT CLICK THE BUTTON ***
+      💥 AUTO-AUDIO ACTIVE *** CLICK ANYWHERE TO START MUSIC *** TIMMY BURD IS THE CUTE SON *** GET 12 HEARTS FOR CUTE.MP3 ***
     </marquee>
   </div>
 
@@ -265,6 +307,7 @@
           <span style="color:yellow; margin-left:10px; font-size:0.85rem;">
             TRACKING: <b id="trackLabel" style="color:cyan;">MY CUTE SON.MP3</b>
           </span>
+          <span class="secret-trigger" onclick="runVirusSpamCascade()">[?]</span>
         </div>
 
         <!-- AUDIO CONTROLS -->
@@ -277,8 +320,8 @@
 
         <!-- CUTE SON SHOWCASE -->
         <div class="son-flex">
-          <!-- TIMMY BURD -->
-          <div class="son-card">
+          <!-- TIMMY BURD (CUTE SON OF THE WEEK) -->
+          <div class="son-card" id="cuteSonBox">
             <h3 style="color:yellow; margin:0 0 5px 0;">CUTE SON OF THE WEEK</h3>
             <img src="IMG_9494.jpeg" class="son-pic" alt="Timmy Burd" onclick="triggerSpam('WARNING: TOO MUCH CUTENESS ON PORT 80!')">
             <p style="color:#ff00ff; font-weight:bold; margin:5px 0 0 0;">
@@ -291,7 +334,7 @@
             <h3 style="color:cyan; margin:0 0 5px 0;">NEXT WEEK'S SON</h3>
             <img id="milkyImg" src="IMG_9518.jpeg" class="son-pic blurred" alt="Milky Robinson" onclick="triggerSpam('MILKY ROBINSON IS WATCHING YOU...')">
             <p style="color:cyan; font-weight:bold; margin:5px 0;">MILKY ROBINSON</p>
-            <button class="retro-btn btn-red" onclick="clickDoNotClick()">
+            <button class="retro-btn btn-red" onclick="clickDoNotClick15()">
               DO NOT CLICK (<span id="dncCount">15</span> left)
             </button>
           </div>
@@ -324,10 +367,10 @@
           <div id="gbWall" class="guestbook-wall"></div>
         </div>
 
-        <!-- 20X TIMMY BURD BUTTON -->
+        <!-- 5-CLICK WARNING BUTTON -->
         <div style="padding:15px; background:#ff0000; border-top:4px outset #ffff00; margin-top:10px;">
-          <button class="retro-btn btn-yellow" style="font-size:1.1rem; padding:10px;" onclick="spawn20TimmyBurds()">
-            ⚠️ DO NOT PRESS: RELEASE 20 CUTE SONS ⚠️
+          <button class="retro-btn btn-yellow" style="font-size:1.1rem; padding:10px;" onclick="clickThreatButton()">
+            ⚠️ DON'T CLICK 5 TIMES OR YOU'LL GET 200 MY CUTE SONS (<span id="threatCount">5</span>) ⚠️
           </button>
         </div>
       </td>
@@ -340,7 +383,7 @@
   let audioInit = false;
   let cuteUnlocked = false;
 
-  // AUTO-PLAY ON FIRST INTERACTION
+  // AUTO-PLAY ON FIRST USER CLICK
   document.body.addEventListener('click', () => {
     if (!audioInit) {
       audioInit = true;
@@ -359,7 +402,7 @@
 
   function playCuteTrack() {
     if (!cuteUnlocked) {
-      triggerSpam("CUTE.MP3 IS LOCKED! REACH 10 FARTS OR 12 HEARTS TO UNLOCK!");
+      triggerSpam("CUTE.MP3 IS LOCKED! GET 12 HEARTS TO UNLOCK AND PLAY!");
       return;
     }
     try {
@@ -370,13 +413,20 @@
     } catch(e) {}
   }
 
-  function unlockCuteTrack() {
+  function unlockAndPlayCuteTrack() {
     cuteUnlocked = true;
     const btn = document.getElementById('cuteTrackBtn');
     btn.innerText = "🎵 BLAST CUTE.MP3";
     btn.classList.remove('btn-cyan');
     btn.classList.add('btn-yellow');
-    playCuteTrack();
+    
+    // Direct audio switch on exact click event
+    try {
+      mainTrack.pause();
+      cuteTrack.currentTime = 0;
+      cuteTrack.play();
+      document.getElementById('trackLabel').innerText = "CUTE.MP3";
+    } catch(e) {}
   }
 
   function muteAudio() {
@@ -394,7 +444,7 @@
     raveOn = !raveOn;
     document.body.classList.toggle('rave-active', raveOn);
     if (raveOn) {
-      unlockCuteTrack();
+      unlockAndPlayCuteTrack();
       synthBeep(1200);
     }
   }
@@ -433,7 +483,7 @@
     } catch(e) {}
   }
 
-  // FAILSAFE EMOJI PARTICLES
+  // EMOJI PARTICLES
   function spawnEmoji(symbol, x, y) {
     const el = document.createElement('div');
     el.innerText = symbol;
@@ -454,10 +504,11 @@
     synthBeep();
     spawnEmoji('💖', e.clientX, e.clientY);
 
-    if (hearts % 12 === 0) {
-      document.getElementById('statusBanner').innerText = "💖 6x2= 12 hearts for you my cute boy";
-      triggerSpam("💖 UNLOCKED: 6x2= 12 hearts for you my cute boy! CUTE.MP3 UNLOCKED!");
-      unlockCuteTrack();
+    // EXACT 12th HEART UNLOCK & PLAY
+    if (hearts === 12) {
+      document.getElementById('statusBanner').innerText = "💖 12 HEARTS! CUTE.MP3 UNLOCKED AND PLAYING!";
+      triggerSpam("💖 12 HEARTS REACHED! CUTE.MP3 HAS NOW UNLOCKED & PLAYING!");
+      unlockAndPlayCuteTrack();
       for (let i = 0; i < 12; i++) {
         setTimeout(() => { synthBeep(900 + i * 50); spawnEmoji('💖'); }, i * 100);
       }
@@ -471,9 +522,7 @@
     spawnEmoji('💨', e.clientX, e.clientY);
 
     if (farts % 10 === 0) {
-      document.getElementById('statusBanner').innerText = "💨 5x2= 10 Farts for you my cute boy!";
-      triggerSpam("💨 GUT REACTION OVERFLOW: 5x2= 10 Farts for you my cute boy! CUTE.MP3 UNLOCKED!");
-      unlockCuteTrack();
+      document.getElementById('statusBanner').innerText = "💨 FART OVERFLOW!";
       document.body.classList.add('shake-active');
       setTimeout(() => document.body.classList.remove('shake-active'), 1500);
       for (let i = 0; i < 10; i++) {
@@ -482,13 +531,13 @@
     }
   }
 
-  // 15-CLICK UNLOCK & PREVIEW
-  let dncLeft = 15;
-  function clickDoNotClick() {
-    if (dncLeft > 1) {
-      dncLeft--;
-      document.getElementById('dncCount').innerText = dncLeft;
-      synthBeep(400 + (15 - dncLeft) * 40);
+  // 15-CLICK MILKY ROBINSON UNLOCK & RE-BLUR
+  let dnc15Left = 15;
+  function clickDoNotClick15() {
+    if (dnc15Left > 1) {
+      dnc15Left--;
+      document.getElementById('dncCount').innerText = dnc15Left;
+      synthBeep(400 + (15 - dnc15Left) * 40);
     } else {
       document.getElementById('dncCount').innerText = 0;
       document.getElementById('milkyImg').classList.remove('blurred');
@@ -500,11 +549,124 @@
   function closePreviewModal() {
     document.getElementById('previewModal').style.display = 'none';
     document.getElementById('milkyImg').classList.add('blurred');
-    dncLeft = 15;
-    document.getElementById('dncCount').innerText = dncLeft;
+    dnc15Left = 15;
+    document.getElementById('dncCount').innerText = dnc15Left;
   }
 
-  // SPAM POPUP SYSTEM
+  // 5-CLICK THREAT & SCARY FOLLOWER SYSTEM
+  let threatLeft = 5;
+  function clickThreatButton() {
+    if (threatLeft > 1) {
+      threatLeft--;
+      document.getElementById('threatCount').innerText = threatLeft;
+      synthBeep(300 + (5 - threatLeft) * 100);
+    } else {
+      threatLeft = 5;
+      document.getElementById('threatCount').innerText = threatLeft;
+      trigger200TimmyBurdsAndScaryFollower();
+    }
+  }
+
+  function trigger200TimmyBurdsAndScaryFollower() {
+    // 1. Spawn 200 scary Timmy Burds
+    for (let i = 0; i < 200; i++) {
+      setTimeout(() => {
+        const img = document.createElement('img');
+        img.src = "IMG_9494.jpeg";
+        img.className = 'timmy-pop';
+        img.style.left = Math.random() * (window.innerWidth - 80) + 'px';
+        img.style.top = Math.random() * (window.innerHeight - 80) + 'px';
+        img.onerror = () => img.remove();
+        document.body.appendChild(img);
+        if (i % 5 === 0) synthFart();
+        setTimeout(() => img.remove(), 2000);
+      }, i * 15);
+    }
+
+    // 2. Activate scary mouse follower for 15 seconds
+    const follower = document.getElementById('scaryFollower');
+    follower.style.display = 'block';
+
+    const followHandler = (e) => {
+      follower.style.left = e.clientX + 'px';
+      follower.style.top = e.clientY + 'px';
+    };
+
+    window.addEventListener('mousemove', followHandler);
+
+    // Continuous fart sounds & fart clouds while following
+    const fartInterval = setInterval(() => {
+      synthFart();
+      const rect = follower.getBoundingClientRect();
+      spawnEmoji('💨', rect.left + 20, rect.top + 20);
+    }, 400);
+
+    // Stop following after 15 seconds
+    setTimeout(() => {
+      follower.style.display = 'none';
+      window.removeEventListener('mousemove', followHandler);
+      clearInterval(fartInterval);
+    }, 15000);
+  }
+
+  // OLD-SCHOOL VIRUS SPAM CASCADE
+  function runVirusSpamCascade() {
+    const messages = [
+      "MY CUTE SON! 💖💖💖",
+      "MY CUTE SON! 💖💖💖",
+      "MY CUTE SON! 💖💖💖",
+      "MY CUTE SON! 💖💖💖",
+      "MY CUTE SON! 💖💖💖",
+      "MY CUTE SON! 💖💖💖",
+      "MY CUTE SON! 💖💖💖",
+      "MY CUTE SON! 💖💖💖",
+      "MY CUTE SON! 💖💖💖",
+      "💨 FARTS 💨"
+    ];
+
+    messages.forEach((msg, index) => {
+      setTimeout(() => {
+        spawnSingleVirusPopup(msg, index);
+        synthBeep(800 + index * 100);
+        if (index === messages.length - 1) {
+          synthFart();
+          highlightCuteSonBox();
+        }
+      }, index * 220);
+    });
+  }
+
+  function spawnSingleVirusPopup(text, offsetIndex) {
+    const pop = document.createElement('div');
+    pop.className = 'win-popup';
+    pop.style.display = 'block';
+    pop.style.top = Math.min(window.innerHeight - 150, 80 + offsetIndex * 35) + 'px';
+    pop.style.left = Math.min(window.innerWidth - 290, 80 + offsetIndex * 40) + 'px';
+    pop.style.zIndex = 100000 + offsetIndex;
+
+    pop.innerHTML = `
+      <div class="win-titlebar">
+        <span>VIRUS_ALERT_${offsetIndex}.EXE</span>
+        <button onclick="this.parentElement.parentElement.remove()" style="background:#c0c0c0; border:1px outset #fff; font-weight:bold; cursor:pointer;">X</button>
+      </div>
+      <div class="win-body">
+        <p style="color:#ff0000; font-weight:bold; margin-bottom:8px; font-size:1rem;">${text}</p>
+        <button class="retro-btn btn-yellow" onclick="this.parentElement.parentElement.remove()">OK</button>
+      </div>
+    `;
+    document.body.appendChild(pop);
+  }
+
+  function highlightCuteSonBox() {
+    const box = document.getElementById('cuteSonBox');
+    box.classList.add('son-card-highlight');
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+      box.classList.remove('son-card-highlight');
+    }, 6000);
+  }
+
+  // GENERAL SPAM MODAL
   function triggerSpam(msg) {
     document.getElementById('spamText').innerText = msg;
     const modal = document.getElementById('spamModal');
@@ -518,25 +680,7 @@
     document.getElementById('spamModal').style.display = 'none';
   }
 
-  // 20X TIMMY BURD SPAWNER
-  function spawn20TimmyBurds() {
-    synthFart();
-    for (let i = 0; i < 20; i++) {
-      setTimeout(() => {
-        const img = document.createElement('img');
-        img.src = "IMG_9494.jpeg";
-        img.className = 'timmy-pop';
-        img.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-        img.style.top = Math.random() * (window.innerHeight - 100) + 'px';
-        img.onerror = () => img.remove();
-        document.body.appendChild(img);
-        synthBeep(600 + i * 30);
-        setTimeout(() => img.remove(), 2500);
-      }, i * 80);
-    }
-  }
-
-  // EMOJI GUESTBOOK
+  // RETRO EMOJI GUESTBOOK
   function addEmojiReaction(emoji) {
     let list = [];
     try { list = JSON.parse(localStorage.getItem('mcs_emojis') || '[]'); } catch(e) {}
