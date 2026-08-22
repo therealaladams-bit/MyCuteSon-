@@ -3,544 +3,470 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MYCUTESON.COM 💖 OFFICIAL TIMMY BURD FAN CLUB 💖</title>
+  <title>~~~ MY CUTE SON 1999 MEGA-SITE ~~~</title>
   <style>
-    * { box-sizing: border-box; }
+    /* CUSTOM HEART CURSOR & ERROR ON CLICK */
+    :root {
+      --cursor-heart: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23ff00ff"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>'), auto;
+      --cursor-error: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23ff0000"><rect width="24" height="24" fill="%23ff0000"/><text x="12" y="18" font-size="18" fill="%23ffffff" text-anchor="middle" font-weight="bold">X</text></svg>'), pointer;
+    }
+
     body {
-      background: #000022;
+      background-color: #000080;
+      background-image: radial-gradient(#ff00ff 20%, transparent 20%), radial-gradient(#00ffff 20%, transparent 20%);
+      background-size: 16px 16px;
+      background-position: 0 0, 8px 8px;
       color: #00ff00;
-      font-family: "Comic Sans MS", "Courier New", cursive, monospace;
+      font-family: "Comic Sans MS", "Chalkboard SE", "Courier New", cursive;
       margin: 0;
       padding: 10px;
       text-align: center;
-      background-image: radial-gradient(#220044 15%, transparent 16%), radial-gradient(#002244 15%, transparent 16%);
-      background-size: 25px 25px;
-      overflow-x: hidden;
+      cursor: var(--cursor-heart);
+      user-select: none;
     }
 
-    .banner {
-      border: 5px ridge #ff00ff;
-      background: #000;
+    body:active {
+      cursor: var(--cursor-error);
+    }
+
+    /* RETRO MARQUEE & HEADER */
+    .header-box {
+      background: #ffff00;
+      color: #ff0000;
+      border: 8px ridge #ff00ff;
       padding: 10px;
+      transform: rotate(-0.5deg);
+      box-shadow: 8px 8px 0px #000;
       margin-bottom: 15px;
-      box-shadow: 0 0 25px #ff00ff, inset 0 0 15px #00ffff;
-      animation: rainbowGlow 2s infinite alternate;
     }
 
-    @keyframes rainbowGlow {
-      0% { border-color: #ff00ff; box-shadow: 0 0 20px #ff00ff; }
-      50% { border-color: #00ffff; box-shadow: 0 0 20px #00ffff; }
-      100% { border-color: #ffff00; box-shadow: 0 0 20px #ffff00; }
-    }
-
-    h1 {
-      color: #ffff00;
+    .flash-title {
       font-size: 2.2rem;
-      text-shadow: 3px 3px #ff00ff, -3px -3px #00ffff;
-      margin: 5px 0;
-    }
-
-    .hit-counter {
-      background: #000;
-      border: 3px double #ff0055;
-      display: inline-block;
-      padding: 6px 18px;
-      font-size: 1.1rem;
-      color: #00ff00;
-      font-weight: bold;
-      letter-spacing: 2px;
-      margin-bottom: 15px;
-      box-shadow: 3px 3px 0px #ff00ff;
-      cursor: pointer;
-    }
-
-    .container {
-      max-width: 750px;
-      margin: 0 auto;
-      border: 4px dashed #00ffff;
-      padding: 15px;
-      background: rgba(0, 0, 20, 0.92);
-      position: relative;
-    }
-
-    .button-zone {
-      margin: 15px 0;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .retro-btn {
-      background: linear-gradient(180deg, #ff00ff, #aa00aa);
-      color: #fff;
-      border: 4px outset #ffffff;
-      padding: 10px 16px;
-      font-weight: bold;
-      font-size: 0.95rem;
-      font-family: inherit;
-      cursor: pointer;
+      font-weight: 900;
       text-transform: uppercase;
-      box-shadow: 3px 3px 0px #000;
+      animation: blinkText 0.2s infinite alternate;
+      margin: 0;
     }
 
-    .retro-btn:active { border-style: inset; transform: translate(2px, 2px); }
-    .btn-fart { background: linear-gradient(180deg, #00ff00, #008000) !important; color: #000 !important; }
-    .btn-danger { background: linear-gradient(180deg, #ff0000, #800000) !important; color: #fff !important; }
+    @keyframes blinkText {
+      0% { color: #ff0000; text-shadow: 2px 2px #000; }
+      100% { color: #0000ff; text-shadow: -2px -2px #ffff00; }
+    }
 
-    /* SON OF THE WEEK HIGHLIGHT */
-    .son-showcase {
+    /* GEO-CITIES TABLE CONTAINER */
+    .main-frame {
+      width: 100%;
+      max-width: 820px;
+      margin: 0 auto;
+      border: 6px outset #00ffff;
+      background: #000000;
+      box-shadow: 10px 10px 0px #ff00ff;
+    }
+
+    .son-flex {
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin: 20px 0;
+      justify-content: space-around;
       flex-wrap: wrap;
+      padding: 10px;
+      gap: 10px;
     }
 
     .son-card {
-      border: 4px solid #ffff00;
+      border: 4px dashed #ff0000;
+      background: #000022;
       padding: 10px;
-      background: #000;
       width: 280px;
-      box-shadow: 5px 5px 0px #ff00ff;
+      box-shadow: 4px 4px 0px #00ff00;
     }
 
-    .son-img {
+    .son-pic {
       width: 100%;
-      height: 240px;
+      height: 230px;
       object-fit: cover;
-      border: 2px solid #00ffff;
-      cursor: pointer;
+      border: 4px outset #ffffff;
     }
 
-    .blurred-son {
-      filter: blur(18px) grayscale(80%);
-      transition: filter 0.5s ease;
+    .blurred {
+      filter: blur(18px) contrast(200%);
     }
 
-    .flash-name {
-      animation: flashText 0.5s infinite alternate;
-      color: #ff00ff;
-      font-weight: bold;
-      font-size: 1.1rem;
-    }
-
-    @keyframes flashText {
-      0% { color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
-      100% { color: #ffff00; text-shadow: 0 0 10px #ffff00; }
-    }
-
-    /* POPUP NOTIFICATION MODAL */
-    .modal {
+    /* 90S WINDOWS POPUP STYLES */
+    .win-popup {
       display: none;
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #000;
-      border: 5px double #00ffff;
-      padding: 20px;
-      z-index: 10000;
-      box-shadow: 0 0 30px #ff00ff;
-      max-width: 90%;
-      width: 400px;
-    }
-
-    .modal-active { display: block; }
-
-    /* GUESTBOOK */
-    .guestbook-box {
-      border: 3px solid #00ffff;
-      padding: 15px;
-      margin-top: 20px;
-      background: #000011;
+      background: #c0c0c0;
+      color: #000;
+      border: 4px outset #ffffff;
+      padding: 4px;
+      z-index: 99999;
+      box-shadow: 8px 8px 0px #000;
+      width: 310px;
       text-align: left;
     }
 
-    .input-field {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
-      background: #000;
-      color: #00ff00;
-      border: 2px solid #00ffff;
-      font-family: inherit;
+    .win-titlebar {
+      background: #000080;
+      color: #ffffff;
+      padding: 3px 6px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .comment-card {
-      border-bottom: 1px dashed #555;
-      padding: 8px 0;
+    .win-body {
+      padding: 15px;
+      text-align: center;
+      font-family: "Courier New", monospace;
     }
 
-    .particle-img {
+    /* RETRO BUTTONS */
+    .retro-btn {
+      font-family: "Comic Sans MS", cursive;
+      font-size: 0.95rem;
+      font-weight: bold;
+      padding: 6px 10px;
+      margin: 3px;
+      border: 4px outset #ffffff;
+      background: #c0c0c0;
+      color: #000;
+      cursor: var(--cursor-heart);
+      text-transform: uppercase;
+    }
+
+    .retro-btn:active {
+      border-style: inset;
+      transform: translate(2px, 2px);
+      cursor: var(--cursor-error);
+    }
+
+    .btn-yellow { background: #ffff00; }
+    .btn-cyan { background: #00ffff; }
+    .btn-pink { background: #ff00ff; color: #fff; }
+    .btn-red { background: #ff0000; color: #fff; }
+
+    /* PARTICLE OVERLAYS */
+    .particle {
       position: fixed;
-      width: 55px;
-      height: 55px;
+      width: 65px;
+      height: 65px;
       pointer-events: none;
-      animation: floatUp 1.2s ease-out forwards;
-      z-index: 9999;
+      z-index: 88888;
+      animation: floatUp 1s forwards;
     }
 
     @keyframes floatUp {
-      0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
-      100% { opacity: 0; transform: translateY(-120px) scale(1.8) rotate(360deg); }
+      0% { transform: scale(0.6) rotate(0deg); opacity: 1; }
+      50% { transform: scale(1.3) rotate(180deg); }
+      100% { transform: scale(1.8) rotate(360deg) translateY(-80px); opacity: 0; }
     }
 
-    .secret-spot {
-      cursor: pointer;
-      display: inline-block;
+    /* EMOJI PICKER GUESTBOOK */
+    .emoji-btn {
+      font-size: 1.5rem;
+      padding: 4px 8px;
+      margin: 2px;
+      border: 2px outset #ffffff;
+      background: #333;
+      cursor: var(--cursor-heart);
+    }
+
+    .guestbook-wall {
+      background: #111;
+      border: 3px inset #00ffff;
+      padding: 8px;
+      margin-top: 8px;
+      text-align: left;
+      max-height: 120px;
+      overflow-y: scroll;
     }
   </style>
 </head>
 <body>
 
-  <!-- AUDIO ELEMENTS -->
-  <audio id="cuteAudio" src="My%20cute%20son.mp3" loop></audio>
-  <audio id="cuteSongAlt" src="cute.mp3" loop></audio>
+  <!-- AUDIO TRACKS -->
+  <audio id="audioJungle" src="cute.mp3" loop></audio>
+  <audio id="audioSon" src="My%20cute%20son.mp3" loop></audio>
 
-  <!-- UNLOCK POPUP MODAL -->
-  <div id="unlock-modal" class="modal">
-    <h2 style="color: #ffff00; margin-top: 0;">🎉 PREVIEW UNLOCKED! 🎉</h2>
-    <p style="color: #fff;">Congrats! You've unlocked a PREVIEW of next week son!</p>
-    <img src="IMG_9518.jpeg" style="width: 200px; height: 200px; object-fit: cover; border: 3px solid #ff00ff;">
-    <h3 style="color: #00ffff;">MILKY ROBINSON IS COMING SOON!</h3>
-    <button class="retro-btn" onclick="closeModal()">CLOSE PREVIEW</button>
-  </div>
-
-  <div class="container">
-    <div class="banner">
-      <h1 onclick="triggerSecret('title')">✨ MYCUTESON.COM ✨</h1>
-      <marquee behavior="scroll" direction="left" style="color: #00ffff; font-weight: bold;">
-        🔥 THIS WEEK'S CUTE SON HAS ARRIVED! FIND THE SECRET EASTER EGGS TO UNLOCK THE ULTIMATE FARTS & HEARTS! 🔥
-      </marquee>
+  <!-- WINDOWS 95 STYLE ERROR POPUP -->
+  <div id="retroModal" class="win-popup">
+    <div class="win-titlebar">
+      <span>SYSTEM WARNING 0x99</span>
+      <button onclick="closeModal()" style="background:#c0c0c0; border:1px outset #fff; font-weight:bold; cursor:pointer;">X</button>
     </div>
-
-    <div class="hit-counter" onclick="triggerSecret('counter')">
-      📟 VISITOR COUNT: <span id="hit-count">001337</span> <span class="secret-spot">✨</span>
-    </div>
-
-    <!-- DUAL AUDIO CONTROLS -->
-    <div class="button-zone">
-      <button class="retro-btn" style="background: #ffff00; color: #000;" onclick="playCuteAudio()">🔊 BLAST CUTE SON AUDIO</button>
-      <button class="retro-btn" style="background: #00ffff; color: #000;" onclick="playCuteSongAlt()">🎵 BLAST CUTE SONG</button>
-      <button class="retro-btn btn-danger" onclick="muteAllAudio()">🔇 MUTE ALL AUDIO & FART</button>
-    </div>
-
-    <!-- CUTE SON SHOWCASE -->
-    <div class="son-showcase">
-      <!-- CUTE SON OF THE WEEK -->
-      <div class="son-card">
-        <h3 style="color: #ffff00; margin: 0 0 5px 0;">🌟 CUTE SON OF THE WEEK 🌟</h3>
-        <img src="IMG_9494.jpeg" class="son-img" alt="Timmy Burd" onclick="triggerSecret('timmy')">
-        <div class="flash-name" style="margin-top: 8px;">YOU ARE THE CUTE SON! YOU ARE TIMMY BURD!</div>
-      </div>
-
-      <!-- NEXT WEEK'S CUTE SON -->
-      <div class="son-card">
-        <h3 style="color: #00ffff; margin: 0 0 5px 0;">🔒 NEXT WEEK'S SON 🔒</h3>
-        <img id="next-week-img" src="IMG_9518.jpeg" class="son-img blurred-son" alt="Milky Robinson" onclick="triggerSecret('milky')">
-        <div style="color: #ff00ff; font-weight: bold; margin-top: 8px;">MILKY ROBINSON</div>
-        <button id="do-not-click-btn" class="retro-btn btn-danger" style="margin-top: 5px; font-size: 0.8rem;" onclick="clickDoNotClick()">
-          🚨 DO NOT CLICK (<span id="dnc-count">10</span> left) 🚨
-        </button>
-      </div>
-    </div>
-
-    <!-- INTERACTIVE HEARTS & FARTS BUTTONS -->
-    <div class="button-zone">
-      <button class="retro-btn" onclick="addHeartCount(event)">💖 HEARTS (<span id="heart-count-display">0</span>) 💖</button>
-      <button class="retro-btn btn-fart" onclick="addFartCount(event)">💨 FARTS (<span id="fart-count-display">0</span>) 💨</button>
-    </div>
-
-    <!-- EASTER EGG TRACKER & REWARD DISPLAY -->
-    <div style="background: #000; border: 2px solid #ffff00; padding: 10px; margin: 15px 0;">
-      <h3 style="color: #ff00ff; margin: 0;">🏆 SECRET EASTER EGGS FOUND: <span id="egg-count" style="color: #00ffff;">0</span> / 5</h3>
-      <div id="achievement-banner" style="color: #00ff00; font-weight: bold; min-height: 25px; margin-top: 5px;">
-        Click around the page title, images, and visitor counter to find hidden secrets!
-      </div>
-    </div>
-
-    <!-- GUESTBOOK -->
-    <div class="guestbook-box">
-      <h3 style="color: #ffff00; margin-top:0;">✏️ SIGN TIMMY BURD'S CUTE WALL OF FAME</h3>
-      <input type="text" id="gb-name" class="input-field" placeholder="Your Handle (e.g. TimmyBurdFan99)" maxlength="30">
-      <textarea id="gb-msg" class="input-field" rows="3" placeholder="Leave a funny message for the cute wall..." maxlength="200"></textarea>
-      <button class="retro-btn" onclick="postComment()">POST TO CUTE WALL ⚡</button>
-
-      <h4 style="color: #00ffff; margin-bottom: 5px; margin-top: 15px;">LIVE CUTE MESSAGES:</h4>
-      <div id="comments-wall">Loading messages...</div>
+    <div class="win-body">
+      <p id="modalMsg" style="color:#000; font-weight:bold; margin-bottom:12px;"></p>
+      <img id="modalImg" src="IMG_9518.jpeg" style="width:140px; height:140px; border:2px inset #000; object-fit:cover; display:none; margin:0 auto 10px auto;">
+      <button class="retro-btn" onclick="closeModal()">OK / DISMISS</button>
     </div>
   </div>
+
+  <div class="header-box">
+    <h1 class="flash-title" onclick="clickEgg('header')">★ MY CUTE SON OFFICIAL ★</h1>
+    <marquee style="background:#000; color:#00ff00; font-weight:bold; padding:2px;">
+      💥 WARNING: ENTERING JUNGLE AUDIO ZONE *** CLICK ANYWHERE TO START MUSIC *** TIMMY BURD IS THE CUTE SON *** DO NOT CLICK THE BUTTON ***
+    </marquee>
+  </div>
+
+  <table class="main-frame">
+    <tr>
+      <td>
+        <!-- SYSTEM STATUS BAR -->
+        <div style="background:#222; padding:6px; border-bottom:2px ridge #00ffff;">
+          <span style="background:red; color:white; padding:3px 6px; font-weight:bold;">
+            📟 VISITORS: <span id="counter">000420</span>
+          </span>
+          <span style="color:yellow; margin-left:10px; font-size:0.9rem;">
+            CURRENT MODE: <b id="modeLabel" style="color:cyan;">JUNGLE BEAT</b>
+          </span>
+        </div>
+
+        <!-- SOUNDBOARD CONTROLS -->
+        <div style="padding:10px; background:#110022; border-bottom:2px dashed #ff00ff;">
+          <button class="retro-btn btn-yellow" onclick="setAudioMode('jungle')">🌴 JUNGLE MODE</button>
+          <button class="retro-btn btn-cyan" onclick="setAudioMode('son')">🔊 BLAST MY CUTE SON</button>
+          <button class="retro-btn btn-red" onclick="muteAllAudio()">🔇 MASTER MUTE</button>
+        </div>
+
+        <!-- CUTE SON SHOWCASE -->
+        <div class="son-flex">
+          <!-- TIMMY BURD -->
+          <div class="son-card">
+            <h3 style="color:yellow; margin:0 0 5px 0;">CUTE SON OF THE WEEK</h3>
+            <img src="IMG_9494.jpeg" class="son-pic" alt="Timmy Burd" onclick="clickEgg('timmy')">
+            <p style="color:#ff00ff; font-weight:bold; margin:5px 0 0 0;">
+              YOU ARE THE CUTE SON! YOU ARE TIMMY BURD!
+            </p>
+          </div>
+
+          <!-- MILKY ROBINSON -->
+          <div class="son-card">
+            <h3 style="color:cyan; margin:0 0 5px 0;">NEXT WEEK'S SON</h3>
+            <img id="milkyImg" src="IMG_9518.jpeg" class="son-pic blurred" alt="Milky Robinson" onclick="clickEgg('milky')">
+            <p style="color:cyan; font-weight:bold; margin:5px 0;">MILKY ROBINSON</p>
+            <button class="retro-btn btn-red" onclick="clickDoNotClick()">
+              DO NOT CLICK (<span id="dncCount">10</span> left)
+            </button>
+          </div>
+        </div>
+
+        <!-- REWARD ACTION BUTTONS -->
+        <div style="padding:10px; background:#220011; border-top:2px ridge #00ff00;">
+          <button class="retro-btn btn-pink" onclick="triggerHeart(event)">💖 HEARTS (<span id="hNum">0</span>)</button>
+          <button class="retro-btn btn-cyan" onclick="triggerFart(event)">💨 FARTS (<span id="fNum">0</span>)</button>
+        </div>
+
+        <!-- INTERACTIVE BANNER -->
+        <div style="background:#000; color:#00ff00; padding:8px; border:2px dashed #ffff00; margin:10px;">
+          🎯 EASTER EGGS UNLOCKED: <span id="eggCount" style="color:cyan;">0</span> / 5
+          <div id="statusBanner" style="color:yellow; font-size:0.85rem; margin-top:4px;">
+            Click hidden elements across the screen!
+          </div>
+        </div>
+
+        <!-- EMOJI REACTIONS GUESTBOOK -->
+        <div style="background:#050515; padding:10px; text-align:left;">
+          <h4 style="color:yellow; margin:0 0 5px 0;">✏️ STICKER REACTION GUESTBOOK</h4>
+          <div>
+            <span style="font-size:0.85rem; color:#fff;">Pick a reaction:</span><br>
+            <button class="emoji-btn" onclick="addEmojiReaction('🚽')">🚽</button>
+            <button class="emoji-btn" onclick="addEmojiReaction('💨')">💨</button>
+            <button class="emoji-btn" onclick="addEmojiReaction('🥩')">🥩</button>
+            <button class="emoji-btn" onclick="addEmojiReaction('🤡')">🤡</button>
+            <button class="emoji-btn" onclick="addEmojiReaction('🍤')">🍤</button>
+            <button class="emoji-btn" onclick="addEmojiReaction('👁️')">👁️</button>
+          </div>
+          <div id="gbWall" class="guestbook-wall"></div>
+        </div>
+      </td>
+    </tr>
+  </table>
 
 <script>
-  // AUDIO SYNTHESIZER
-  let audioCtx = null;
-  let muted = false;
+  // AUDIO ELEMENTS
+  const jungleTrack = document.getElementById('audioJungle');
+  const sonTrack = document.getElementById('audioSon');
+  let audioInitialized = false;
 
-  function initAudioContext() {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  // INITIALIZE JUNGLE AUDIO ON FIRST CLICK ANYWHERE
+  document.body.addEventListener('click', () => {
+    if (!audioInitialized) {
+      audioInitialized = true;
+      jungleTrack.play().catch(() => {});
     }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
+  }, { once: true });
+
+  function setAudioMode(mode) {
+    jungleTrack.pause();
+    sonTrack.pause();
+
+    if (mode === 'jungle') {
+      jungleTrack.currentTime = 0;
+      jungleTrack.play().catch(() => popAlert("Click somewhere on page first to start music!"));
+      document.getElementById('modeLabel').innerText = "JUNGLE BEAT";
+    } else if (mode === 'son') {
+      sonTrack.currentTime = 0;
+      sonTrack.play().catch(() => popAlert("Click somewhere on page first to start music!"));
+      document.getElementById('modeLabel').innerText = "MY CUTE SON";
     }
-  }
-
-  function playBeep(freq, type, duration) {
-    if (muted) return;
-    initAudioContext();
-    try {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = type;
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + duration);
-    } catch(e) {}
-  }
-
-  function triggerFartSound() {
-    if (muted) return;
-    initAudioContext();
-    try {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(140, audioCtx.currentTime);
-      osc.frequency.linearRampToValueAtTime(30, audioCtx.currentTime + 0.45);
-      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.45);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.45);
-    } catch(e) {}
-  }
-
-  function stopAllMusic() {
-    const a1 = document.getElementById('cuteAudio');
-    const a2 = document.getElementById('cuteSongAlt');
-    a1.pause(); a1.currentTime = 0;
-    a2.pause(); a2.currentTime = 0;
-  }
-
-  function playCuteAudio() {
-    initAudioContext();
-    stopAllMusic();
-    const audio = document.getElementById('cuteAudio');
-    audio.muted = false;
-    muted = false;
-    audio.play().catch(e => console.log("User interaction required to play audio"));
-  }
-
-  function playCuteSongAlt() {
-    initAudioContext();
-    stopAllMusic();
-    const audio = document.getElementById('cuteSongAlt');
-    audio.muted = false;
-    muted = false;
-    audio.play().catch(e => console.log("User interaction required to play audio"));
   }
 
   function muteAllAudio() {
-    stopAllMusic();
-    triggerFartSound(); // Plays final fart as it shuts down music
-    muted = true;
-    alert("🔇 ALL AUDIO MUTED! (Plus a bonus shutdown fart!)");
+    jungleTrack.pause();
+    sonTrack.pause();
+    document.getElementById('modeLabel').innerText = "MUTED";
+    synthFart();
+    popAlert("🔇 MASTER MUTE ACTIVATED! SHUTTING DOWN AUDIO SYSTEM!");
   }
 
-  // PNG PARTICLE FILENAMES
-  const HEART_IMG = "pngtree-smooth-glossy-heart-vector-file-ai-and-png-y315-10332808.png";
-  const FART_IMG = "Unique-Fart-Cloud-Concept-PNG.png";
-
-  function spawnPNGParticle(imgSrc, x, y) {
-    let img = document.createElement('img');
-    img.src = imgSrc;
-    img.className = 'particle-img';
-    img.onerror = () => img.remove();
-    img.style.left = (x || (Math.random() * (window.innerWidth - 100) + 50)) + 'px';
-    img.style.top = (y || (Math.random() * (window.innerHeight - 100) + 50)) + 'px';
-    document.body.appendChild(img);
-    setTimeout(() => img.remove(), 1200);
-  }
-
-  // COUNTERS & MILESTONES
-  let heartCount = 0;
-  let fartCount = 0;
-
-  function addFartCount(e) {
-    fartCount++;
-    document.getElementById('fart-count-display').innerText = fartCount;
-    triggerFartSound();
-    spawnPNGParticle(FART_IMG, e.clientX, e.clientY);
-
-    // 10 FARTS REWARD: 5x2 = 10 Farts for you my cute boy!
-    if (fartCount % 10 === 0) {
-      trigger10FartsSequence();
-    }
-  }
-
-  function trigger10FartsSequence() {
-    const banner = document.getElementById('achievement-banner');
-    banner.innerText = "💨 5x2= 10 Farts for you my cute boy!";
-    
-    for (let i = 0; i < 10; i++) {
-      setTimeout(() => {
-        triggerFartSound();
-        spawnPNGParticle(FART_IMG);
-      }, i * 180);
-    }
-  }
-
-  function addHeartCount(e) {
-    heartCount++;
-    document.getElementById('heart-count-display').innerText = heartCount;
-    playBeep(880 + (heartCount * 20), 'sine', 0.15);
-    spawnPNGParticle(HEART_IMG, e.clientX, e.clientY);
-
-    // 12 HEARTS REWARD: 6x2 = 12 hearts for you my cute boy
-    if (heartCount % 12 === 0) {
-      trigger12HeartsSequence();
-    }
-  }
-
-  function trigger12HeartsSequence() {
-    const banner = document.getElementById('achievement-banner');
-    banner.innerText = "💖 6x2= 12 hearts for you my cute boy!";
-    
-    for (let i = 0; i < 12; i++) {
-      setTimeout(() => {
-        playBeep(1000 + (i * 50), 'triangle', 0.15);
-        spawnPNGParticle(HEART_IMG);
-      }, i * 140);
-    }
-  }
-
-  // DO NOT CLICK 10 TIMES UNLOCKS NEXT WEEK'S SON
-  let dncClicks = 10;
-  function clickDoNotClick() {
-    if (dncClicks > 1) {
-      dncClicks--;
-      document.getElementById('dnc-count').innerText = dncClicks;
-      playBeep(400 + (dncClicks * 40), 'square', 0.1);
-    } else {
-      document.getElementById('dnc-count').innerText = 0;
-      document.getElementById('next-week-img').classList.remove('blurred-son');
-      document.getElementById('unlock-modal').classList.add('modal-active');
-      playBeep(1200, 'sine', 0.4);
-      trigger10FartsSequence();
-      triggerSecret('dnc');
-    }
+  // RETRO POPUP DIALOGS
+  function popAlert(msg, showImg = false) {
+    document.getElementById('modalMsg').innerText = msg;
+    document.getElementById('modalImg').style.display = showImg ? 'block' : 'none';
+    document.getElementById('retroModal').style.display = 'block';
   }
 
   function closeModal() {
-    document.getElementById('unlock-modal').classList.remove('modal-active');
+    document.getElementById('retroModal').style.display = 'none';
   }
 
-  // SECRET EASTER EGG TRACKER SYSTEM
-  let foundEggs = new Set();
-  function triggerSecret(eggName) {
-    if (!foundEggs.has(eggName)) {
-      foundEggs.add(eggName);
-      document.getElementById('egg-count').innerText = foundEggs.size;
-      playBeep(1500, 'sine', 0.3);
+  // SYNTH SOUND EFFECTS
+  function synthFart() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(140, ctx.currentTime);
+      osc.frequency.linearRampToValueAtTime(25, ctx.currentTime + 0.35);
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.35);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.35);
+    } catch(e) {}
+  }
 
-      if (foundEggs.size === 5) {
-        trigger10FartsSequence();
-        alert("🎉 ULTIMATE EASTER EGG LEVEL UNLOCKED! 10 FARTS FOR YOU MY CUTE BOY! 🎉");
+  function synthBeep() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(880, ctx.currentTime);
+      gain.gain.setValueAtTime(0.1, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.12);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.12);
+    } catch(e) {}
+  }
+
+  // PNG PARTICLE SPAWNER
+  const HEART_PNG = "pngtree-smooth-glossy-heart-vector-file-ai-and-png-y315-10332808.png";
+  const FART_PNG = "Unique-Fart-Cloud-Concept-PNG.png";
+
+  function spawnPNG(src, x, y) {
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = 'particle';
+    img.style.left = (x || Math.random() * (window.innerWidth - 70)) + 'px';
+    img.style.top = (y || Math.random() * (window.innerHeight - 70)) + 'px';
+    img.onerror = () => img.remove();
+    document.body.appendChild(img);
+    setTimeout(() => img.remove(), 1000);
+  }
+
+  // COUNTERS & MESSAGES
+  let heartCount = 0;
+  let fartCount = 0;
+
+  function triggerHeart(e) {
+    heartCount++;
+    document.getElementById('hNum').innerText = heartCount;
+    synthBeep();
+    spawnPNG(HEART_PNG, e.clientX, e.clientY);
+
+    if (heartCount % 12 === 0) {
+      document.getElementById('statusBanner').innerText = "💖 6x2= 12 hearts for you my cute boy";
+      popAlert("💖 ALERT: 6x2= 12 hearts for you my cute boy!");
+      for (let i = 0; i < 12; i++) {
+        setTimeout(() => { synthBeep(); spawnPNG(HEART_PNG); }, i * 100);
       }
     }
   }
 
-  // RELIABLE VISITOR COUNTER
-  function updateHitCounter() {
-    let count = parseInt(localStorage.getItem('mycuteson_hits') || '1337') + 1;
-    localStorage.setItem('mycuteson_hits', count);
-    document.getElementById('hit-count').innerText = String(count).padStart(6, '0');
-  }
+  function triggerFart(e) {
+    fartCount++;
+    document.getElementById('fNum').innerText = fartCount;
+    synthFart();
+    spawnPNG(FART_PNG, e.clientX, e.clientY);
 
-  // ROBUST LOCAL + REMOTE GUESTBOOK
-  const BIN_ID = "6a88fdf3f5f4af5e29338aba";
-  const MASTER_KEY = "$2a$10$bQy3M4NBos5erk8.HqlQd.2Yk/7rGmXW6ExlVAXlMQNsu95DooKWO";
-  const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-
-  function getLocalComments() {
-    return JSON.parse(localStorage.getItem('mycuteson_comments') || '[{"name":"Timmy Burd Fan","msg":"Timmy Burd is the cutest son ever!"}]');
-  }
-
-  function renderComments(comments) {
-    const wall = document.getElementById('comments-wall');
-    if (!comments || comments.length === 0) {
-      wall.innerHTML = `<p style="color: #00ffff; font-size: 0.85rem; text-align: center;">No messages yet! Be the first to sign Timmy Burd's wall!</p>`;
-      return;
+    if (fartCount % 10 === 0) {
+      document.getElementById('statusBanner').innerText = "💨 5x2= 10 Farts for you my cute boy!";
+      popAlert("💨 CRITICAL FART OVERFLOW: 5x2= 10 Farts for you my cute boy!");
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => { synthFart(); spawnPNG(FART_PNG); }, i * 120);
+      }
     }
-    wall.innerHTML = comments.map(c => `
-      <div class="comment-card">
-        <div style="color: #ff00ff; font-weight: bold;">✏️ ${escapeHtml(c.name || 'Anonymous Cute Boy')}:</div>
-        <div style="color: #ffffff; margin-top: 3px;">${escapeHtml(c.msg || '')}</div>
-      </div>
+  }
+
+  // UNLOCK MECHANIC
+  let dncLeft = 10;
+  function clickDoNotClick() {
+    if (dncLeft > 1) {
+      dncLeft--;
+      document.getElementById('dncCount').innerText = dncLeft;
+      synthBeep();
+    } else {
+      document.getElementById('dncCount').innerText = 0;
+      document.getElementById('milkyImg').classList.remove('blurred');
+      popAlert("🚨 CONGRATS! YOU UNLOCKED MILKY ROBINSON (NEXT WEEK'S SON)!", true);
+      clickEgg('dnc');
+    }
+  }
+
+  // SECRET EASTER EGGS
+  let foundEggs = new Set();
+  function clickEgg(id) {
+    if (!foundEggs.has(id)) {
+      foundEggs.add(id);
+      document.getElementById('eggCount').innerText = foundEggs.size;
+      synthBeep();
+      if (foundEggs.size === 5) {
+        popAlert("🎉 UNBELIEVABLE! ALL 5 SECRET EASTER EGGS FOUND! YOU ARE THE ULTIMATE CUTE BOY!");
+      }
+    }
+  }
+
+  // EMOJI REACTION GUESTBOOK
+  function addEmojiReaction(emoji) {
+    const list = JSON.parse(localStorage.getItem('mcs_emojis') || '[]');
+    list.unshift({ emoji, time: new Date().toLocaleTimeString() });
+    localStorage.setItem('mcs_emojis', JSON.stringify(list));
+    renderGuestbook();
+    clickEgg('gb');
+  }
+
+  function renderGuestbook() {
+    const list = JSON.parse(localStorage.getItem('mcs_emojis') || '[{"emoji":"🚽","time":"1999-12-31"},{"emoji":"💨","time":"1999-12-31"}]');
+    document.getElementById('gbWall').innerHTML = list.map(item => `
+      <span style="font-size:1.4rem; margin-right:6px;" title="${item.time}">${item.emoji}</span>
     `).join('');
   }
 
-  async function loadLiveComments() {
-    try {
-      const res = await fetch(`${API_URL}/latest`, {
-        headers: { "X-Master-Key": MASTER_KEY }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        renderComments(data.record || []);
-        return;
-      }
-    } catch (err) {}
-    renderComments(getLocalComments());
-  }
-
-  async function postComment() {
-    const nameInput = document.getElementById('gb-name');
-    const msgInput = document.getElementById('gb-msg');
-    const name = nameInput.value.trim() || "Anonymous Timmy Burd Fan";
-    const msg = msgInput.value.trim();
-
-    if (!msg) {
-      alert("Please type a message before posting!");
-      return;
-    }
-
-    let localComms = getLocalComments();
-    localComms.unshift({ name, msg });
-    localStorage.setItem('mycuteson_comments', JSON.stringify(localComms));
-
-    try {
-      await fetch(API_URL, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Master-Key": MASTER_KEY
-        },
-        body: JSON.stringify(localComms)
-      });
-    } catch(err) {}
-
-    nameInput.value = '';
-    msgInput.value = '';
-    renderComments(localComms);
-    triggerSecret('guestbook');
-    alert("⚡ POSTED TO TIMMY BURD'S CUTE WALL! ⚡");
-  }
-
-  function escapeHtml(str) {
-    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    loadLiveComments();
-    updateHitCounter();
-  });
+  window.onload = () => {
+    renderGuestbook();
+    let hits = parseInt(localStorage.getItem('mcs_hits') || '420') + 1;
+    localStorage.setItem('mcs_hits', hits);
+    document.getElementById('counter').innerText = String(hits).padStart(6, '0');
+  };
 </script>
 </body>
 </html>
