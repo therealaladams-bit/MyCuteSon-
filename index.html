@@ -22,7 +22,6 @@
       padding: 10px;
       text-align: center;
       cursor: var(--cursor-heart);
-      user-select: none;
     }
 
     body:active {
@@ -165,24 +164,52 @@
       100% { transform: scale(1.8) rotate(360deg) translateY(-80px); opacity: 0; }
     }
 
-    /* EMOJI PICKER GUESTBOOK */
-    .emoji-btn {
-      font-size: 1.5rem;
-      padding: 4px 8px;
-      margin: 2px;
-      border: 2px outset #ffffff;
-      background: #333;
-      cursor: var(--cursor-heart);
+    /* TYPED GUESTBOOK STYLING */
+    .guestbook-form-box {
+      background: #111;
+      border: 3px inset #ff00ff;
+      padding: 12px;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    .guestbook-input {
+      width: 100%;
+      padding: 6px;
+      margin-bottom: 6px;
+      border: 2px inset #fff;
+      background: #000;
+      color: #00ff00;
+      font-family: "Courier New", monospace;
+      box-sizing: border-box;
     }
 
     .guestbook-wall {
-      background: #111;
+      background: #050505;
       border: 3px inset #00ffff;
-      padding: 8px;
+      padding: 10px;
       margin-top: 8px;
       text-align: left;
-      max-height: 120px;
+      max-height: 180px;
       overflow-y: scroll;
+    }
+
+    .guestbook-entry {
+      border-bottom: 1px dashed #444;
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+    }
+
+    .guestbook-author {
+      color: #ffff00;
+      font-weight: bold;
+    }
+
+    .guestbook-time {
+      color: #888;
+      font-size: 0.75rem;
+      float: right;
     }
   </style>
 </head>
@@ -268,18 +295,19 @@
           </div>
         </div>
 
-        <!-- EMOJI REACTIONS GUESTBOOK -->
-        <div style="background:#050515; padding:10px; text-align:left;">
-          <h4 style="color:yellow; margin:0 0 5px 0;">✏️ STICKER REACTION GUESTBOOK</h4>
-          <div>
-            <span style="font-size:0.85rem; color:#fff;">Pick a reaction:</span><br>
-            <button class="emoji-btn" onclick="addEmojiReaction('🚽')">🚽</button>
-            <button class="emoji-btn" onclick="addEmojiReaction('💨')">💨</button>
-            <button class="emoji-btn" onclick="addEmojiReaction('🥩')">🥩</button>
-            <button class="emoji-btn" onclick="addEmojiReaction('🤡')">🤡</button>
-            <button class="emoji-btn" onclick="addEmojiReaction('🍤')">🍤</button>
-            <button class="emoji-btn" onclick="addEmojiReaction('👁️')">👁️</button>
-          </div>
+        <!-- TYPED TEXT GUESTBOOK SECTION -->
+        <div class="guestbook-form-box">
+          <h4 style="color:yellow; margin:0 0 8px 0;">✏️ SIGN THE MEGA-SITE GUESTBOOK</h4>
+          <form id="guestbookForm" onsubmit="handleGuestbookSubmit(event)">
+            <label style="font-size:0.8rem; color:#00ffff;">Your Name / Handle:</label>
+            <input type="text" id="gbName" class="guestbook-input" required placeholder="e.g. xX_CoolKid99_Xx" autocomplete="off">
+            
+            <label style="font-size:0.8rem; color:#00ffff;">Your Message:</label>
+            <textarea id="gbMessage" class="guestbook-input" rows="2" required placeholder="Type your words here..." autocomplete="off"></textarea>
+            
+            <button type="submit" class="retro-btn btn-yellow">Sign Guestbook! 🚀</button>
+          </form>
+          
           <div id="gbWall" class="guestbook-wall"></div>
         </div>
       </td>
@@ -445,20 +473,53 @@
     }
   }
 
-  // EMOJI REACTION GUESTBOOK
-  function addEmojiReaction(emoji) {
-    const list = JSON.parse(localStorage.getItem('mcs_emojis') || '[]');
-    list.unshift({ emoji, time: new Date().toLocaleTimeString() });
-    localStorage.setItem('mcs_emojis', JSON.stringify(list));
+  // TYPED TEXT GUESTBOOK LOGIC
+  function handleGuestbookSubmit(e) {
+    e.preventDefault();
+    const nameInput = document.getElementById('gbName');
+    const msgInput = document.getElementById('gbMessage');
+    
+    const name = nameInput.value.trim();
+    const message = msgInput.value.trim();
+    
+    if (!name || !message) return;
+
+    const list = JSON.parse(localStorage.getItem('mcs_guestbook') || '[]');
+    list.unshift({
+      name: escapeHTML(name),
+      message: escapeHTML(message),
+      time: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    });
+    
+    localStorage.setItem('mcs_guestbook', JSON.stringify(list));
+    
+    nameInput.value = '';
+    msgInput.value = '';
+    
     renderGuestbook();
+    synthBeep();
     clickEgg('gb');
   }
 
   function renderGuestbook() {
-    const list = JSON.parse(localStorage.getItem('mcs_emojis') || '[{"emoji":"🚽","time":"1999-12-31"},{"emoji":"💨","time":"1999-12-31"}]');
+    const defaultEntries = [
+      { name: "Timmy's Fan #1", message: "This site is totally radical! Timmy Burd rules!", time: "12/31/1999 23:59" }
+    ];
+    const list = JSON.parse(localStorage.getItem('mcs_guestbook') || JSON.stringify(defaultEntries));
+    
     document.getElementById('gbWall').innerHTML = list.map(item => `
-      <span style="font-size:1.4rem; margin-right:6px;" title="${item.time}">${item.emoji}</span>
+      <div class="guestbook-entry">
+        <span class="guestbook-author">${item.name}:</span> 
+        <span style="color:#00ff00;">${item.message}</span>
+        <span class="guestbook-time">${item.time}</span>
+      </div>
     `).join('');
+  }
+
+  function escapeHTML(str) {
+    return str.replace(/[&<>'"]/g, 
+      tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+    );
   }
 
   window.onload = () => {
