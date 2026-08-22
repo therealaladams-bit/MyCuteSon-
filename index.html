@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MYCUTESON.COM 💖 THE MOST CUTE & UNHINGED PLACE ON EARTH 💖</title>
+  <title>MYCUTESON.COM 💖 OFFICIAL TIMMY BURD FAN CLUB 💖</title>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -18,7 +18,6 @@
       overflow-x: hidden;
     }
 
-    /* CHAOTIC MARQUEE BANNER */
     .banner {
       border: 5px ridge #ff00ff;
       background: #000;
@@ -36,24 +35,23 @@
 
     h1 {
       color: #ffff00;
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       text-shadow: 3px 3px #ff00ff, -3px -3px #00ffff;
       margin: 5px 0;
-      letter-spacing: 2px;
     }
 
-    /* REAL-TIME HIT COUNTER */
     .hit-counter {
       background: #000;
       border: 3px double #ff0055;
       display: inline-block;
       padding: 6px 18px;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: #00ff00;
       font-weight: bold;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       margin-bottom: 15px;
       box-shadow: 3px 3px 0px #ff00ff;
+      cursor: pointer;
     }
 
     .container {
@@ -65,7 +63,6 @@
       position: relative;
     }
 
-    /* BUTTON ZONE */
     .button-zone {
       margin: 15px 0;
       display: flex;
@@ -78,65 +75,77 @@
       background: linear-gradient(180deg, #ff00ff, #aa00aa);
       color: #fff;
       border: 4px outset #ffffff;
-      padding: 12px 18px;
+      padding: 10px 16px;
       font-weight: bold;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-family: inherit;
       cursor: pointer;
       text-transform: uppercase;
-      box-shadow: 4px 4px 0px #000;
-      transition: transform 0.1s;
+      box-shadow: 3px 3px 0px #000;
     }
 
-    .retro-btn:hover { transform: scale(1.05) rotate(-1deg); }
     .retro-btn:active { border-style: inset; transform: translate(2px, 2px); }
-
     .btn-fart { background: linear-gradient(180deg, #00ff00, #008000) !important; color: #000 !important; }
-    .btn-danger { background: linear-gradient(180deg, #ff0000, #800000) !important; color: #fff !important; animation: pulse 0.8s infinite alternate; }
+    .btn-danger { background: linear-gradient(180deg, #ff0000, #800000) !important; color: #fff !important; }
 
-    @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
-
-    /* GALLERY DISPLAY & DRAGGABLE STACK */
-    .photo-stage {
+    /* SON OF THE WEEK HIGHLIGHT */
+    .son-showcase {
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 20px;
       margin: 20px 0;
       flex-wrap: wrap;
     }
 
-    .cute-photo {
-      width: 160px;
-      height: 160px;
-      object-fit: cover;
+    .son-card {
       border: 4px solid #ffff00;
-      box-shadow: 5px 5px 0px #ff00ff;
-      border-radius: 10px;
-      cursor: grab;
-      transition: transform 0.2s;
-    }
-
-    .cute-photo:hover { transform: scale(1.15) rotate(5deg); z-index: 100; }
-
-    /* MINI GAME ZONE */
-    .game-box {
-      border: 4px double #ffff00;
+      padding: 10px;
       background: #000;
-      padding: 15px;
-      margin: 20px 0;
-      position: relative;
+      width: 280px;
+      box-shadow: 5px 5px 0px #ff00ff;
     }
 
-    #game-canvas {
-      background: #110022;
-      border: 3px solid #ff00ff;
+    .son-img {
       width: 100%;
-      max-width: 450px;
-      height: 220px;
-      margin: 10px auto;
-      display: block;
-      cursor: crosshair;
+      height: 240px;
+      object-fit: cover;
+      border: 2px solid #00ffff;
     }
+
+    .blurred-son {
+      filter: blur(18px) grayscale(80%);
+      transition: filter 0.5s ease;
+    }
+
+    .flash-name {
+      animation: flashText 0.5s infinite alternate;
+      color: #ff00ff;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    @keyframes flashText {
+      0% { color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
+      100% { color: #ffff00; text-shadow: 0 0 10px #ffff00; }
+    }
+
+    /* POPUP NOTIFICATION MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #000;
+      border: 5px double #00ffff;
+      padding: 20px;
+      z-index: 10000;
+      box-shadow: 0 0 30px #ff00ff;
+      max-width: 90%;
+      width: 400px;
+    }
+
+    .modal-active { display: block; }
 
     /* GUESTBOOK */
     .guestbook-box {
@@ -145,7 +154,6 @@
       margin-top: 20px;
       background: #000011;
       text-align: left;
-      box-shadow: 0 0 10px #00ffff;
     }
 
     .input-field {
@@ -156,23 +164,17 @@
       color: #00ff00;
       border: 2px solid #00ffff;
       font-family: inherit;
-      font-size: 0.95rem;
     }
 
     .comment-card {
       border-bottom: 1px dashed #555;
-      padding: 10px 0;
-      animation: fadeIn 0.5s;
+      padding: 8px 0;
     }
 
-    .comment-author { color: #ff00ff; font-weight: bold; }
-    .comment-text { color: #ffffff; margin-top: 4px; }
-
-    /* PARTICLES */
     .particle-img {
       position: fixed;
-      width: 50px;
-      height: 50px;
+      width: 55px;
+      height: 55px;
       pointer-events: none;
       animation: floatUp 1.2s ease-out forwards;
       z-index: 9999;
@@ -183,81 +185,96 @@
       100% { opacity: 0; transform: translateY(-120px) scale(1.8) rotate(360deg); }
     }
 
-    .screen-shake { animation: shake 0.4s infinite; }
-    @keyframes shake {
-      0% { transform: translate(1px, 1px) rotate(0deg); }
-      20% { transform: translate(-3px, 0px) rotate(1deg); }
-      40% { transform: translate(1px, -1px) rotate(-1deg); }
-      60% { transform: translate(-2px, 1px) rotate(0deg); }
-      80% { transform: translate(2px, 1px) rotate(1deg); }
-      100% { transform: translate(1px, -2px) rotate(-1deg); }
+    .secret-spot {
+      cursor: pointer;
+      display: inline-block;
     }
   </style>
 </head>
 <body>
 
-  <!-- AUDIO ELEMENT FOR YOUR REPO'S MP3 -->
-  <audio id="cuteAudio" src="My%20cute%20son.mp3" preload="auto"></audio>
+  <audio id="cuteAudio" src="My%20cute%20son.mp3" loop></audio>
 
-  <div class="container" id="main-container">
+  <!-- UNLOCK POPUP MODAL -->
+  <div id="unlock-modal" class="modal">
+    <h2 style="color: #ffff00; margin-top: 0;">🎉 PREVIEW UNLOCKED! 🎉</h2>
+    <p style="color: #fff;">Congrats! You've unlocked a PREVIEW of next week son!</p>
+    <img src="IMG_9518.jpeg" style="width: 200px; height: 200px; object-fit: cover; border: 3px solid #ff00ff;">
+    <h3 style="color: #00ffff;">MILKY ROBINSON IS COMING SOON!</h3>
+    <button class="retro-btn" onclick="closeModal()">CLOSE PREVIEW</button>
+  </div>
+
+  <div class="container">
     <div class="banner">
       <h1>✨ MYCUTESON.COM ✨</h1>
       <marquee behavior="scroll" direction="left" style="color: #00ffff; font-weight: bold;">
-        🔥 WELCOME TO THE UNHINGED CUTE ZONE! 💖 PRESS BUTTONS! CATCH TARGETS! SIGN THE WALL! 💨 NO BORING WEBSITES ALLOWED! 🔥
+        🔥 THIS WEEK'S CUTE SON HAS ARRIVED! FIND THE SECRET EASTER EGGS TO UNLOCK THE ULTIMATE FARTS & HEARTS! 🔥
       </marquee>
     </div>
 
-    <!-- REAL TIME HIT COUNTER -->
-    <div class="hit-counter">
-      📟 REAL-TIME VISITOR COUNT: <span id="hit-count">001337</span>
+    <div class="hit-counter" onclick="triggerSecret('counter')">
+      📟 VISITOR COUNT: <span id="hit-count">001337</span> <span class="secret-spot">✨</span>
     </div>
 
-    <!-- CUTE PHOTO GALLERY STACK -->
-    <div class="photo-stage">
-      <img src="IMG_9494.jpeg" class="cute-photo" alt="Cute Son 1" onclick="popPhoto(this)">
-      <img src="IMG_9518.jpeg" class="cute-photo" alt="Cute Son 2" onclick="popPhoto(this)">
-    </div>
-
-    <!-- INTERACTIVE CHAOS BUTTON ZONE -->
+    <!-- AUDIO CONTROLS -->
     <div class="button-zone">
-      <button class="retro-btn" onclick="triggerHearts(event)">💖 HEARTS 💖</button>
-      <button class="retro-btn btn-fart" onclick="triggerFarts(event)">💨 FARTS 💨</button>
       <button class="retro-btn" style="background: #ffff00; color: #000;" onclick="playCuteAudio()">🔊 BLAST CUTE AUDIO</button>
-      <button class="retro-btn" style="background: #00ffff; color: #000;" onclick="spinWheel()">🔮 CUTE FORTUNE</button>
-      <button class="retro-btn btn-danger" onclick="nukeScreen()">🚨 DO NOT PRESS 🚨</button>
+      <button class="retro-btn btn-danger" onclick="muteAllAudio()">🔇 MUTE AUDIO & FART</button>
     </div>
 
-    <!-- FORTUNE DISPLAY -->
-    <div id="fortune-box" style="color: #ffff00; font-size: 1.1rem; font-weight: bold; min-height: 25px; margin: 10px 0;"></div>
-
-    <!-- ARCADE TARGET GAME -->
-    <div class="game-box">
-      <h3 style="color: #ff00ff; margin: 0;">🎮 ARCADE: Bouncing Cute Catcher 🎮</h3>
-      <p style="font-size: 0.85rem; color: #ffff00; margin: 5px 0;">CLICK targets! Get 10 score to unlock HIGH SCORE CUTE AUDIO!</p>
-      <canvas id="game-canvas" width="450" height="220"></canvas>
-      <div style="font-size: 1.1rem; font-weight: bold; margin-top: 5px;">
-        SCORE: <span id="game-score" style="color: #00ffff;">0</span> | HIGH SCORE: <span id="game-high" style="color: #ff00ff;">0</span>
+    <!-- CUTE SON SHOWCASE -->
+    <div class="son-showcase">
+      <!-- CUTE SON OF THE WEEK -->
+      <div class="son-card">
+        <h3 style="color: #ffff00; margin: 0 0 5px 0;">🌟 CUTE SON OF THE WEEK 🌟</h3>
+        <img src="IMG_9494.jpeg" class="son-img" alt="Timmy Burd" onclick="triggerSecret('timmy')">
+        <div class="flash-name" style="margin-top: 8px;">YOU ARE THE CUTE SON! YOU ARE TIMMY BURD!</div>
       </div>
-      <button class="retro-btn" style="margin-top: 8px; font-size: 0.85rem;" onclick="startGame()">START GAME ⚡</button>
+
+      <!-- NEXT WEEK'S CUTE SON -->
+      <div class="son-card">
+        <h3 style="color: #00ffff; margin: 0 0 5px 0;">🔒 NEXT WEEK'S SON 🔒</h3>
+        <img id="next-week-img" src="IMG_9518.jpeg" class="son-img blurred-son" alt="Milky Robinson">
+        <div style="color: #ff00ff; font-weight: bold; margin-top: 8px;">MILKY ROBINSON</div>
+        <button id="do-not-click-btn" class="retro-btn btn-danger" style="margin-top: 5px; font-size: 0.8rem;" onclick="clickDoNotClick()">
+          🚨 DO NOT CLICK (<span id="dnc-count">10</span> left) 🚨
+        </button>
+      </div>
     </div>
 
-    <!-- GUESTBOOK SECTION -->
-    <div class="guestbook-box">
-      <h3 style="color: #ffff00; margin-top:0;">✏️ SIGN THE LIVE CUTE GUESTBOOK</h3>
-      <input type="text" id="gb-name" class="input-field" placeholder="Your Handle / Fan Title" maxlength="30">
-      <textarea id="gb-msg" class="input-field" rows="3" placeholder="Leave a funny message for everyone on earth to read..." maxlength="200"></textarea>
-      <button class="retro-btn" onclick="postComment()">POST TO WALL ⚡</button>
+    <!-- INTERACTIVE HEARTS & FARTS BUTTONS -->
+    <div class="button-zone">
+      <button class="retro-btn" onclick="addHeartCount(event)">💖 HEARTS (<span id="heart-count-display">0</span>) 💖</button>
+      <button class="retro-btn btn-fart" onclick="addFartCount(event)">💨 FARTS (<span id="fart-count-display">0</span>) 💨</button>
+    </div>
 
-      <h4 style="color: #00ffff; margin-bottom: 5px; margin-top: 15px;">LIVE WALL MESSAGES:</h4>
-      <div id="comments-wall">Loading fan messages...</div>
+    <!-- EASTER EGG TRACKER & REWARD DISPLAY -->
+    <div style="background: #000; border: 2px solid #ffff00; padding: 10px; margin: 15px 0;">
+      <h3 style="color: #ff00ff; margin: 0;">🏆 SECRET EASTER EGGS FOUND: <span id="egg-count" style="color: #00ffff;">0</span> / 5</h3>
+      <div id="achievement-banner" style="color: #00ff00; font-weight: bold; min-height: 25px; margin-top: 5px;">
+        Click around the page, pictures, and buttons to find hidden secrets!
+      </div>
+    </div>
+
+    <!-- GUESTBOOK -->
+    <div class="guestbook-box">
+      <h3 style="color: #ffff00; margin-top:0;">✏️ SIGN TIMMY BURD'S CUTE WALL OF FAME</h3>
+      <input type="text" id="gb-name" class="input-field" placeholder="Your Handle (e.g. TimmyBurdFan99)" maxlength="30">
+      <textarea id="gb-msg" class="input-field" rows="3" placeholder="Leave a funny/whacky comment for the cute wall..." maxlength="200"></textarea>
+      <button class="retro-btn" onclick="postComment()">POST TO CUTE WALL ⚡</button>
+
+      <h4 style="color: #00ffff; margin-bottom: 5px; margin-top: 15px;">LIVE CUTE MESSAGES:</h4>
+      <div id="comments-wall">Loading messages...</div>
     </div>
   </div>
 
 <script>
-  // AUDIO SYNTHESIZER FOR SOUND EFFECTS
+  // AUDIO SYNTHESIZER
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  let muted = false;
 
   function playBeep(freq, type, duration) {
+    if (muted) return;
     if (audioCtx.state === 'suspended') audioCtx.resume();
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
@@ -271,45 +288,8 @@
     osc.stop(audioCtx.currentTime + duration);
   }
 
-  function playCuteAudio() {
-    const audio = document.getElementById('cuteAudio');
-    audio.currentTime = 0;
-    audio.play().catch(e => alert("Tap screen first to unlock audio playback!"));
-  }
-
-  // REAL-TIME HIT COUNTER (Uses CountAPI + Local Fallback)
-  async function updateHitCounter() {
-    try {
-      const res = await fetch('https://api.countapi.xyz/hit/mycuteson.com/visits');
-      const data = await res.json();
-      document.getElementById('hit-count').innerText = String(data.value).padStart(6, '0');
-    } catch (err) {
-      let count = parseInt(localStorage.getItem('mycuteson_hits') || '1337') + 1;
-      localStorage.setItem('mycuteson_hits', count);
-      document.getElementById('hit-count').innerText = String(count).padStart(6, '0');
-    }
-  }
-
-  // PNG PARTICLE SPAWNER USING YOUR REPO FILENAMES
-  const HEART_IMG = "pngtree-smooth-glossy-heart-vector-file-ai-and-png-y315-10332808.png";
-  const FART_IMG = "Unique-Fart-Cloud-Concept-PNG.png";
-
-  function triggerHearts(e) {
-    playBeep(880, 'sine', 0.15);
-    setTimeout(() => playBeep(1174.66, 'sine', 0.2), 100);
-
-    for (let i = 0; i < 8; i++) {
-      let img = document.createElement('img');
-      img.src = HEART_IMG;
-      img.className = 'particle-img';
-      img.style.left = (e.clientX + (Math.random() * 100 - 50)) + 'px';
-      img.style.top = (e.clientY + (Math.random() * 100 - 50)) + 'px';
-      document.body.appendChild(img);
-      setTimeout(() => img.remove(), 1200);
-    }
-  }
-
-  function triggerFarts(e) {
+  function triggerFartSound() {
+    if (muted) return;
     if (audioCtx.state === 'suspended') audioCtx.resume();
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
@@ -322,146 +302,148 @@
     gain.connect(audioCtx.destination);
     osc.start();
     osc.stop(audioCtx.currentTime + 0.45);
+  }
 
-    for (let i = 0; i < 8; i++) {
-      let img = document.createElement('img');
-      img.src = FART_IMG;
-      img.className = 'particle-img';
-      img.style.left = (e.clientX + (Math.random() * 100 - 50)) + 'px';
-      img.style.top = (e.clientY + (Math.random() * 100 - 50)) + 'px';
-      document.body.appendChild(img);
-      setTimeout(() => img.remove(), 1200);
+  function playCuteAudio() {
+    const audio = document.getElementById('cuteAudio');
+    audio.muted = false;
+    muted = false;
+    audio.currentTime = 0;
+    audio.play().catch(e => alert("Tap screen first to allow audio!"));
+  }
+
+  function muteAllAudio() {
+    const audio = document.getElementById('cuteAudio');
+    audio.pause();
+    audio.currentTime = 0;
+    triggerFartSound(); // Plays final fart as it shuts down music
+    muted = true;
+    alert("🔇 ALL AUDIO MUTED! (Plus a bonus shutdown fart!)");
+  }
+
+  // PNG PARTICLE FILENAMES FROM YOUR REPO
+  const HEART_IMG = "pngtree-smooth-glossy-heart-vector-file-ai-and-png-y315-10332808.png";
+  const FART_IMG = "Unique-Fart-Cloud-Concept-PNG.png";
+
+  function spawnPNGParticle(imgSrc, x, y) {
+    let img = document.createElement('img');
+    img.src = imgSrc;
+    img.className = 'particle-img';
+    img.style.left = (x || (Math.random() * (window.innerWidth - 100) + 50)) + 'px';
+    img.style.top = (y || (Math.random() * (window.innerHeight - 100) + 50)) + 'px';
+    document.body.appendChild(img);
+    setTimeout(() => img.remove(), 1200);
+  }
+
+  // COUNTERS & MILESTONES
+  let heartCount = 0;
+  let fartCount = 0;
+
+  function addFartCount(e) {
+    fartCount++;
+    document.getElementById('fart-count-display').innerText = fartCount;
+    triggerFartSound();
+    spawnPNGParticle(FART_IMG, e.clientX, e.clientY);
+
+    // 10 FARTS REWARD: 5x2 = 10 Farts for you my cute boy!
+    if (fartCount === 10) {
+      trigger10FartsSequence();
     }
   }
 
-  function popPhoto(el) {
-    playBeep(1200, 'triangle', 0.1);
-    el.style.transform = `scale(1.3) rotate(${(Math.random() * 30 - 15)}deg)`;
-    setTimeout(() => { el.style.transform = 'scale(1) rotate(0deg)'; }, 300);
-  }
-
-  // FORTUNE WHEEL
-  const fortunes = [
-    "👑 Title Awarded: Supreme Commander of Cuteness!",
-    "💨 Title Awarded: Grand Master of Fart Clouds!",
-    "🤘 Title Awarded: Certified Metal Smile Champion!",
-    "⚡ Title Awarded: 100% Whacky Energy Specialist!",
-    "🍕 Title Awarded: Official Pizza Slice Inspector!"
-  ];
-
-  function spinWheel() {
-    playBeep(700, 'square', 0.15);
-    const box = document.getElementById('fortune-box');
-    box.innerText = "🔮 CONSULTING THE CUTE ORACLE...";
-    setTimeout(() => {
-      box.innerText = fortunes[Math.floor(Math.random() * fortunes.length)];
-      playBeep(1200, 'sine', 0.3);
-    }, 600);
-  }
-
-  // NUKE / PANIC BUTTON
-  function nukeScreen() {
-    const container = document.getElementById('main-container');
-    container.classList.add('screen-shake');
-    playBeep(150, 'sawtooth', 0.8);
-    playCuteAudio();
-
-    for(let i=0; i<20; i++) {
+  function trigger10FartsSequence() {
+    const banner = document.getElementById('achievement-banner');
+    banner.innerText = "💨 5x2= 10 Farts for you my cute boy!";
+    
+    for (let i = 0; i < 10; i++) {
       setTimeout(() => {
-        let fakeE = { clientX: Math.random() * window.innerWidth, clientY: Math.random() * window.innerHeight };
-        if (Math.random() > 0.5) triggerHearts(fakeE); else triggerFarts(fakeE);
-      }, i * 50);
+        triggerFartSound();
+        spawnPNGParticle(FART_IMG);
+      }, i * 200);
     }
-
-    setTimeout(() => container.classList.remove('screen-shake'), 1200);
   }
 
-  // ARCADE BOUNCING CUTE GAME
-  const canvas = document.getElementById('game-canvas');
-  const ctx = canvas.getContext('2d');
-  let score = 0;
-  let highScore = parseInt(localStorage.getItem('mycute_highscore') || '0');
-  document.getElementById('game-high').innerText = highScore;
+  function addHeartCount(e) {
+    heartCount++;
+    document.getElementById('heart-count-display').innerText = heartCount;
+    playBeep(880 + (heartCount * 20), 'sine', 0.15);
+    spawnPNGParticle(HEART_IMG, e.clientX, e.clientY);
 
-  let targetImg = new Image();
-  targetImg.src = HEART_IMG;
-
-  let target = { x: 80, y: 80, radius: 25, dx: 4, dy: 4 };
-  let gameRunning = false;
-
-  function startGame() {
-    score = 0;
-    document.getElementById('game-score').innerText = score;
-    gameRunning = true;
-    spawnTarget();
-    gameLoop();
+    // 12 HEARTS REWARD: 6x2 = 12 hearts for you my cute boy
+    if (heartCount === 12) {
+      trigger12HeartsSequence();
+    }
   }
 
-  function spawnTarget() {
-    target.x = Math.random() * (canvas.width - 60) + 30;
-    target.y = Math.random() * (canvas.height - 60) + 30;
-    target.dx = (Math.random() - 0.5) * 8;
-    target.dy = (Math.random() - 0.5) * 8;
+  function trigger12HeartsSequence() {
+    const banner = document.getElementById('achievement-banner');
+    banner.innerText = "💖 6x2= 12 hearts for you my cute boy!";
+    
+    for (let i = 0; i < 12; i++) {
+      setTimeout(() => {
+        playBeep(1000 + (i * 50), 'triangle', 0.15);
+        spawnPNGParticle(HEART_IMG);
+      }, i * 150);
+    }
   }
 
-  function gameLoop() {
-    if (!gameRunning) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    target.x += target.dx;
-    target.y += target.dy;
-
-    if (target.x < 25 || target.x > canvas.width - 25) target.dx *= -1;
-    if (target.y < 25 || target.y > canvas.height - 25) target.dy *= -1;
-
-    // Draw Target Image or Fallback Circle
-    if (targetImg.complete) {
-      ctx.drawImage(targetImg, target.x - 25, target.y - 25, 50, 50);
+  // DO NOT CLICK 10 TIMES UNLOCKS NEXT WEEK'S SON
+  let dncClicks = 10;
+  function clickDoNotClick() {
+    if (dncClicks > 1) {
+      dncClicks--;
+      document.getElementById('dnc-count').innerText = dncClicks;
+      playBeep(400 + (dncClicks * 40), 'square', 0.1);
     } else {
-      ctx.beginPath();
-      ctx.arc(target.x, target.y, target.radius, 0, Math.PI * 2);
-      ctx.fillStyle = '#ff00ff';
-      ctx.fill();
+      document.getElementById('dnc-count').innerText = 0;
+      document.getElementById('next-week-img').classList.remove('blurred-son');
+      document.getElementById('unlock-modal').classList.add('modal-active');
+      playBeep(1200, 'sine', 0.4);
+      trigger10FartsSequence(); // Extra funny noise reward!
+      triggerSecret('dnc');
     }
-
-    requestAnimationFrame(gameLoop);
   }
 
-  canvas.addEventListener('click', function(e) {
-    if (!gameRunning) return;
-    const rect = canvas.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const clickY = e.clientY - rect.top;
+  function closeModal() {
+    document.getElementById('unlock-modal').classList.remove('modal-active');
+  }
 
-    const dist = Math.hypot(clickX - target.x, clickY - target.y);
-    if (dist < target.radius + 10) {
-      score++;
-      playBeep(500 + (score * 60), 'sine', 0.12);
-      document.getElementById('game-score').innerText = score;
+  // SECRET EASTER EGG TRACKER SYSTEM
+  let foundEggs = new Set();
+  function triggerSecret(eggName) {
+    if (!foundEggs.has(eggName)) {
+      foundEggs.add(eggName);
+      document.getElementById('egg-count').innerText = foundEggs.size;
+      playBeep(1500, 'sine', 0.3);
 
-      if (score > highScore) {
-        highScore = score;
-        localStorage.setItem('mycute_highscore', highScore);
-        document.getElementById('game-high').innerText = highScore;
+      if (foundEggs.size === 5) {
+        trigger10FartsSequence();
+        alert("🎉 ULTIMATE EASTER EGG LEVEL UNLOCKED! 10 FARTS FOR YOU MY CUTE BOY! 🎉");
       }
-
-      if (score === 10) {
-        playCuteAudio();
-        alert("🎉 HIGH SCORE 10 REACHED! UNLOCKING CUTE AUDIO OVERLOAD! 🎉");
-      }
-
-      spawnTarget();
     }
-  });
+  }
 
-  // JSONBIN DATABASE INTEGRATION (WIRED TO YOUR EXACT KEYS)
+  // REAL-TIME HIT COUNTER
+  async function updateHitCounter() {
+    try {
+      const res = await fetch('https://api.countapi.xyz/hit/mycuteson.com/visits');
+      const data = await res.json();
+      document.getElementById('hit-count').innerText = String(data.value).padStart(6, '0');
+    } catch (err) {
+      let count = parseInt(localStorage.getItem('mycuteson_hits') || '1337') + 1;
+      localStorage.setItem('mycuteson_hits', count);
+      document.getElementById('hit-count').innerText = String(count).padStart(6, '0');
+    }
+  }
+
+  // JSONBIN DATABASE INTEGRATION
   const BIN_ID = "6a88fdf3f5f4af5e29338aba";
   const MASTER_KEY = "$2a$10$bQy3M4NBos5erk8.HqlQd.2Yk/7rGmXW6ExlVAXlMQNsu95DooKWO";
   const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
   async function loadLiveComments() {
     const wall = document.getElementById('comments-wall');
-    wall.innerHTML = `<p style="color: #ffff00; text-align: center; font-size: 0.85rem;">Loading live fan messages...</p>`;
+    wall.innerHTML = `<p style="color: #ffff00; text-align: center; font-size: 0.85rem;">Loading cute fan messages...</p>`;
 
     try {
       const res = await fetch(`${API_URL}/latest`, {
@@ -471,14 +453,14 @@
       const comments = data.record || [];
 
       if (comments.length === 0) {
-        wall.innerHTML = `<p style="color: #00ffff; font-size: 0.85rem; text-align: center;">No messages yet! Be the first to sign the wall!</p>`;
+        wall.innerHTML = `<p style="color: #00ffff; font-size: 0.85rem; text-align: center;">No messages yet! Be the first to sign Timmy Burd's wall!</p>`;
         return;
       }
 
       wall.innerHTML = comments.map(c => `
         <div class="comment-card">
-          <div class="comment-author">✏️ ${escapeHtml(c.name || 'Anonymous Cute Fan')}:</div>
-          <div class="comment-text">${escapeHtml(c.msg || '')}</div>
+          <div style="color: #ff00ff; font-weight: bold;">✏️ ${escapeHtml(c.name || 'Anonymous Cute Boy')}:</div>
+          <div style="color: #ffffff; margin-top: 3px;">${escapeHtml(c.msg || '')}</div>
         </div>
       `).join('');
     } catch (err) {
@@ -489,7 +471,7 @@
   async function postComment() {
     const nameInput = document.getElementById('gb-name');
     const msgInput = document.getElementById('gb-msg');
-    const name = nameInput.value.trim() || "Anonymous Cute Fan";
+    const name = nameInput.value.trim() || "Anonymous Timmy Burd Fan";
     const msg = msgInput.value.trim();
 
     if (!msg) {
@@ -519,7 +501,8 @@
         nameInput.value = '';
         msgInput.value = '';
         loadLiveComments();
-        alert("⚡ POSTED TO THE CUTE WALL! ⚡");
+        triggerSecret('guestbook');
+        alert("⚡ POSTED TO TIMMY BURD'S CUTE WALL! ⚡");
       } else {
         alert("Error saving comment. Try again!");
       }
