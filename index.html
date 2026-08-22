@@ -1,716 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>~~~ MY CUTE SON 1999 MEGA-SITE ~~~</title>
+  <meta charset="UTF-8" />
+  <title>MyCuteSon Guestbook</title>
   <style>
-    :root {
-      --cursor-heart: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23ff00ff"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>'), auto;
-      --cursor-error: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23ff0000"><rect width="24" height="24" fill="%23ff0000"/><text x="12" y="18" font-size="18" fill="%23ffffff" text-anchor="middle" font-weight="bold">X</text></svg>'), pointer;
-    }
-
+    /* Classic 90s Guestbook Aesthetic */
     body {
-      background-color: #000080;
-      background-image: radial-gradient(#ff00ff 20%, transparent 20%), radial-gradient(#00ffff 20%, transparent 20%);
-      background-size: 16px 16px;
-      background-position: 0 0, 8px 8px;
-      color: #00ff00;
-      font-family: "Comic Sans MS", "Chalkboard SE", "Courier New", cursive;
-      margin: 0;
-      padding: 10px;
-      text-align: center;
-      cursor: var(--cursor-heart);
-      user-select: none;
-      overflow-x: hidden;
-    }
-
-    body:active {
-      cursor: var(--cursor-error);
-    }
-
-    .rave-active {
-      animation: raveBkg 0.15s infinite alternate !important;
-    }
-
-    @keyframes raveBkg {
-      0% { background-color: #ff00ff; }
-      33% { background-color: #00ffff; }
-      66% { background-color: #ffff00; }
-      100% { background-color: #ff0000; }
-    }
-
-    .shake-active {
-      animation: screenShake 0.05s infinite alternate;
-    }
-
-    @keyframes screenShake {
-      0% { transform: translate(6px, 6px); }
-      100% { transform: translate(-6px, -6px); }
-    }
-
-    .header-box {
-      background: #ffff00;
-      color: #ff0000;
-      border: 8px ridge #ff00ff;
-      padding: 10px;
-      transform: rotate(-0.5deg);
-      box-shadow: 8px 8px 0px #000;
-      margin-bottom: 15px;
-    }
-
-    .flash-title {
-      font-size: 2.2rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      animation: blinkText 0.2s infinite alternate;
-      margin: 0;
-      cursor: pointer;
-    }
-
-    @keyframes blinkText {
-      0% { color: #ff0000; text-shadow: 2px 2px #000; }
-      100% { color: #0000ff; text-shadow: -2px -2px #ffff00; }
-    }
-
-    .main-frame {
-      width: 100%;
-      max-width: 820px;
-      margin: 0 auto;
-      border: 6px outset #00ffff;
-      background: #000000;
-      box-shadow: 10px 10px 0px #ff00ff;
-    }
-
-    .son-flex {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      padding: 10px;
-      gap: 10px;
-    }
-
-    .son-card {
-      border: 4px dashed #ff0000;
-      background: #000022;
-      padding: 10px;
-      width: 280px;
-      box-shadow: 4px 4px 0px #00ff00;
-      transition: all 0.2s ease;
-    }
-
-    .son-card-highlight {
-      border: 6px solid #00ffff !important;
-      background: #ff00ff !important;
-      box-shadow: 0 0 25px #ffff00, 0 0 15px #00ff00 !important;
-      animation: flashHighlight 0.2s infinite alternate !important;
-    }
-
-    @keyframes flashHighlight {
-      0% { transform: scale(1.05) rotate(-2deg); }
-      100% { transform: scale(1.05) rotate(2deg); }
-    }
-
-    .son-pic {
-      width: 100%;
-      height: 230px;
-      object-fit: cover;
-      border: 4px outset #ffffff;
-      cursor: pointer;
-    }
-
-    .blurred {
-      filter: blur(20px) contrast(200%);
-    }
-
-    .win-popup {
-      display: none;
-      position: fixed;
-      background: #c0c0c0;
+      background-color: #008080;
+      font-family: "Courier New", Courier, monospace;
       color: #000;
-      border: 4px outset #ffffff;
-      padding: 4px;
-      z-index: 99999;
-      box-shadow: 8px 8px 0px #000;
-      width: 280px;
-      text-align: left;
+      padding: 20px;
     }
-
-    .win-titlebar {
-      background: #000080;
-      color: #ffffff;
-      padding: 3px 6px;
+    .window {
+      background: #c0c0c0;
+      border: 2px solid #fff;
+      border-right-color: #404040;
+      border-bottom-color: #404040;
+      width: 100%;
+      max-width: 650px;
+      margin: 0 auto 20px auto;
+      box-shadow: 4px 4px 0px #000;
+    }
+    .title-bar {
+      background: navy;
+      color: white;
+      padding: 4px 8px;
       font-weight: bold;
-      font-size: 0.85rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-
-    .win-body {
-      padding: 12px;
-      text-align: center;
-      font-family: "Courier New", monospace;
+    .window-body {
+      padding: 15px;
     }
-
-    .retro-btn {
-      font-family: "Comic Sans MS", cursive;
-      font-size: 0.95rem;
+    .form-group {
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
       font-weight: bold;
-      padding: 6px 10px;
-      margin: 3px;
-      border: 4px outset #ffffff;
+      margin-bottom: 4px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 6px;
+      border: 2px inset #fff;
+      background: #fff;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+    .btn-retro {
       background: #c0c0c0;
-      color: #000;
-      cursor: var(--cursor-heart);
-      text-transform: uppercase;
-    }
-
-    .retro-btn:active {
-      border-style: inset;
-      transform: translate(2px, 2px);
-      cursor: var(--cursor-error);
-    }
-
-    .btn-yellow { background: #ffff00; }
-    .btn-cyan { background: #00ffff; }
-    .btn-pink { background: #ff00ff; color: #fff; }
-    .btn-red { background: #ff0000; color: #fff; }
-    .btn-green { background: #00ff00; color: #000; }
-
-    .emoji-particle {
-      position: fixed;
-      pointer-events: none;
-      z-index: 88888;
-      font-size: 3rem;
-      animation: floatUp 1.2s forwards;
-    }
-
-    .timmy-pop {
-      position: fixed;
-      width: 90px;
-      height: 90px;
-      object-fit: cover;
-      border: 3px solid #ff0000;
-      filter: invert(30%) contrast(200%);
-      z-index: 90000;
-      pointer-events: none;
-      animation: popZoom 2s forwards;
-    }
-
-    #scaryFollower {
-      position: fixed;
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border: 3px solid #ff0000;
-      filter: invert(100%) hue-rotate(180deg) contrast(200%);
-      z-index: 999999;
-      pointer-events: none;
-      display: none;
-      box-shadow: 0 0 15px #ff0000;
-      transform: translate(-50%, -50%);
-    }
-
-    @keyframes floatUp {
-      0% { transform: scale(0.6) rotate(0deg); opacity: 1; }
-      50% { transform: scale(1.3) rotate(180deg); }
-      100% { transform: scale(1.8) rotate(360deg) translateY(-80px); opacity: 0; }
-    }
-
-    @keyframes popZoom {
-      0% { transform: scale(0.1) rotate(0deg); opacity: 1; }
-      50% { transform: scale(1.4) rotate(20deg); opacity: 1; }
-      100% { transform: scale(1) rotate(-10deg) translateY(100px); opacity: 0; }
-    }
-
-    .emoji-btn {
-      font-size: 1.4rem;
-      padding: 4px 8px;
-      margin: 2px;
-      border: 2px outset #ffffff;
-      background: #333;
-      cursor: var(--cursor-heart);
-    }
-
-    .guestbook-wall {
-      background: #111;
-      border: 3px inset #00ffff;
-      padding: 8px;
-      margin-top: 8px;
-      text-align: left;
-      max-height: 100px;
-      overflow-y: scroll;
-    }
-
-    .secret-trigger {
-      display: inline-block;
-      font-size: 0.7rem;
-      color: #333;
+      border: 2px outset #fff;
+      padding: 6px 16px;
+      font-weight: bold;
       cursor: pointer;
-      margin-left: 5px;
     }
-    .secret-trigger:hover {
-      color: #ff00ff;
+    .btn-retro:active {
+      border-style: inset;
+    }
+    .entry-card {
+      background: #fff;
+      border: 2px inset #808080;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+    .entry-header {
+      font-weight: bold;
+      border-bottom: 1px dashed #808080;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+      color: #000080;
+    }
+    .entry-date {
+      font-size: 0.8em;
+      color: #666;
+      float: right;
+    }
+    #status-msg {
+      font-weight: bold;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
-  <!-- AUDIO ELEMENTS -->
-  <audio id="audioMain" src="My%20cute%20son.mp3" loop></audio>
-  <audio id="audioCute" src="cute.mp3" loop></audio>
-
-  <!-- SCARY FOLLOWER IMAGE -->
-  <img id="scaryFollower" src="IMG_9494.jpeg" alt="Scary Timmy Burd">
-
-  <!-- WINDOWS 95 RETRO PREVIEW MODAL -->
-  <div id="previewModal" class="win-popup" style="top:50%; left:50%; transform:translate(-50%, -50%);">
-    <div class="win-titlebar">
-      <span>PREVIEW_UNLOCK.EXE</span>
-      <button onclick="closePreviewModal()" style="background:#c0c0c0; border:1px outset #fff; font-weight:bold; cursor:pointer;">X</button>
+  <!-- Sign Guestbook Form Window -->
+  <div class="window">
+    <div class="title-bar">
+      <span>Sign the Guestbook!</span>
+      <span>[X]</span>
     </div>
-    <div class="win-body">
-      <p style="color:#000; font-weight:bold; margin-bottom:8px; font-size:0.85rem;">🚨 MILKY ROBINSON PREVIEW 🚨</p>
-      <img src="IMG_9518.jpeg" style="width:120px; height:120px; border:2px inset #000; object-fit:cover; display:block; margin:0 auto 8px auto;">
-      <button class="retro-btn btn-red" onclick="closePreviewModal()">CLOSE & RE-BLUR</button>
-    </div>
-  </div>
-
-  <!-- SPAM POPUP TEMPLATE -->
-  <div id="spamModal" class="win-popup" style="display:none;">
-    <div class="win-titlebar">
-      <span id="spamTitle">SYSTEM WARNING</span>
-      <button onclick="closeSpam()" style="background:#c0c0c0; border:1px outset #fff; font-weight:bold; cursor:pointer;">X</button>
-    </div>
-    <div class="win-body">
-      <p id="spamText" style="color:#ff0000; font-weight:bold; margin-bottom:10px; font-size:0.9rem;"></p>
-      <button class="retro-btn btn-yellow" onclick="closeSpam()">CLAIM NOW</button>
+    <div class="window-body">
+      <form id="guestbook-form">
+        <div class="form-group">
+          <label for="author">Your Name / Handle:</label>
+          <input type="text" id="author" required placeholder="e.g. xX_CoolGuy_Xx">
+        </div>
+        <div class="form-group">
+          <label for="message">Your Message:</label>
+          <textarea id="message" rows="4" required placeholder="Leave a note for the site!"></textarea>
+        </div>
+        <button type="submit" class="btn-retro" id="submit-btn">Post Entry 🚀</button>
+      </form>
+      <div id="status-msg"></div>
     </div>
   </div>
 
-  <div class="header-box">
-    <h1 class="flash-title" onclick="triggerSpam('LOCAL CUTE SON DETECTED IN YOUR AREA!')">★ MY CUTE SON OFFICIAL ★</h1>
-    <marquee style="background:#000; color:#00ff00; font-weight:bold; padding:2px;">
-      💥 AUTO-AUDIO ACTIVE *** CLICK ANYWHERE TO START MUSIC *** TIMMY BURD IS THE CUTE SON *** GET 12 HEARTS FOR CUTE.MP3 ***
-    </marquee>
+  <!-- Full Guestbook Feed Window -->
+  <div class="window">
+    <div class="title-bar">
+      <span>Guestbook Entries (<span id="entry-count">0</span>)</span>
+    </div>
+    <div class="window-body">
+      <div id="entries-container">Loading entries...</div>
+    </div>
   </div>
 
-  <table class="main-frame">
-    <tr>
-      <td>
-        <!-- STATUS BAR -->
-        <div style="background:#222; padding:6px; border-bottom:2px ridge #00ffff;">
-          <span style="background:red; color:white; padding:3px 6px; font-weight:bold;">
-            📟 GLOBAL VISITORS: <span id="counter">000420</span>
-          </span>
-          <span style="color:yellow; margin-left:10px; font-size:0.85rem;">
-            TRACKING: <b id="trackLabel" style="color:cyan;">MY CUTE SON.MP3</b>
-          </span>
-          <span class="secret-trigger" onclick="runVirusSpamCascade()">[?]</span>
-        </div>
+  <script>
+    // Configuration - Replace with your active JSONBin Bin ID and Access Key
+    const BIN_ID = 'YOUR_JSONBIN_BIN_ID';
+    const API_KEY = 'YOUR_JSONBIN_API_KEY';
+    const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-        <!-- AUDIO CONTROLS -->
-        <div style="padding:10px; background:#110022; border-bottom:2px dashed #ff00ff;">
-          <button class="retro-btn btn-yellow" onclick="playDefaultTrack()">🔊 MY CUTE SON</button>
-          <button id="cuteTrackBtn" class="retro-btn btn-cyan" onclick="playCuteTrack()">🎵 CUTE.MP3 (LOCKED)</button>
-          <button class="retro-btn btn-pink" onclick="toggleRaveMode()">🪩 RAVE MODE</button>
-          <button class="retro-btn btn-red" onclick="muteAudio()">🔇 MUTE</button>
-        </div>
+    const form = document.getElementById('guestbook-form');
+    const statusMsg = document.getElementById('status-msg');
+    const entriesContainer = document.getElementById('entries-container');
+    const entryCount = document.getElementById('entry-count');
 
-        <!-- CUTE SON SHOWCASE -->
-        <div class="son-flex">
-          <!-- TIMMY BURD (CUTE SON OF THE WEEK) -->
-          <div class="son-card" id="cuteSonBox">
-            <h3 style="color:yellow; margin:0 0 5px 0;">CUTE SON OF THE WEEK</h3>
-            <img src="IMG_9494.jpeg" class="son-pic" alt="Timmy Burd" onclick="triggerSpam('WARNING: TOO MUCH CUTENESS ON PORT 80!')">
-            <p style="color:#ff00ff; font-weight:bold; margin:5px 0 0 0;">
-              YOU ARE THE CUTE SON! YOU ARE TIMMY BURD!
-            </p>
-          </div>
-
-          <!-- MILKY ROBINSON -->
-          <div class="son-card">
-            <h3 style="color:cyan; margin:0 0 5px 0;">NEXT WEEK'S SON</h3>
-            <img id="milkyImg" src="IMG_9518.jpeg" class="son-pic blurred" alt="Milky Robinson" onclick="triggerSpam('MILKY ROBINSON IS WATCHING YOU...')">
-            <p style="color:cyan; font-weight:bold; margin:5px 0;">MILKY ROBINSON</p>
-            <button class="retro-btn btn-red" onclick="clickDoNotClick15()">
-              DO NOT CLICK (<span id="dncCount">15</span> left)
-            </button>
-          </div>
-        </div>
-
-        <!-- REWARD ACTION BUTTONS -->
-        <div style="padding:10px; background:#220011; border-top:2px ridge #00ff00;">
-          <button class="retro-btn btn-pink" onclick="triggerHeart(event)">💖 HEARTS (<span id="hNum">0</span>)</button>
-          <button class="retro-btn btn-green" onclick="triggerFart(event)">💨 FARTS (<span id="fNum">0</span>)</button>
-        </div>
-
-        <!-- STATUS BANNER -->
-        <div style="background:#000; color:#00ff00; padding:8px; border:2px dashed #ffff00; margin:10px;">
-          <div id="statusBanner" style="color:yellow; font-size:0.85rem;">
-            Click hidden areas to unleash 90s party popups!
-          </div>
-        </div>
-
-        <!-- EMOJI GUESTBOOK -->
-        <div style="background:#050515; padding:10px; text-align:left;">
-          <h4 style="color:yellow; margin:0 0 5px 0;">✏️ STICKER REACTION GUESTBOOK</h4>
-          <div>
-            <button class="emoji-btn" onclick="addEmojiReaction('🚽')">🚽</button>
-            <button class="emoji-btn" onclick="addEmojiReaction('💨')">💨</button>
-            <button class="emoji-btn" onclick="addEmojiReaction('🥩')">🥩</button>
-            <button class="emoji-btn" onclick="addEmojiReaction('🤡')">🤡</button>
-            <button class="emoji-btn" onclick="addEmojiReaction('🍤')">🍤</button>
-            <button class="emoji-btn" onclick="addEmojiReaction('👁️')">👁️</button>
-          </div>
-          <div id="gbWall" class="guestbook-wall"></div>
-        </div>
-
-        <!-- 5-CLICK WARNING BUTTON -->
-        <div style="padding:15px; background:#ff0000; border-top:4px outset #ffff00; margin-top:10px;">
-          <button class="retro-btn btn-yellow" style="font-size:1.1rem; padding:10px;" onclick="clickThreatButton()">
-            ⚠️ DON'T CLICK 5 TIMES OR YOU'LL GET 200 MY CUTE SONS (<span id="threatCount">5</span>) ⚠️
-          </button>
-        </div>
-      </td>
-    </tr>
-  </table>
-
-<script>
-  const mainTrack = document.getElementById('audioMain');
-  const cuteTrack = document.getElementById('audioCute');
-  let audioInit = false;
-  let cuteUnlocked = false;
-
-  // AUTO-PLAY ON FIRST USER CLICK
-  document.body.addEventListener('click', () => {
-    if (!audioInit) {
-      audioInit = true;
-      try { mainTrack.play(); } catch(e) {}
-    }
-  }, { once: true });
-
-  function playDefaultTrack() {
-    try {
-      cuteTrack.pause();
-      mainTrack.currentTime = 0;
-      mainTrack.play();
-      document.getElementById('trackLabel').innerText = "MY CUTE SON.MP3";
-    } catch(e) {}
-  }
-
-  function playCuteTrack() {
-    if (!cuteUnlocked) {
-      triggerSpam("CUTE.MP3 IS LOCKED! GET 12 HEARTS TO UNLOCK AND PLAY!");
-      return;
-    }
-    try {
-      mainTrack.pause();
-      cuteTrack.currentTime = 0;
-      cuteTrack.play();
-      document.getElementById('trackLabel').innerText = "CUTE.MP3";
-    } catch(e) {}
-  }
-
-  function unlockAndPlayCuteTrack() {
-    cuteUnlocked = true;
-    const btn = document.getElementById('cuteTrackBtn');
-    btn.innerText = "🎵 BLAST CUTE.MP3";
-    btn.classList.remove('btn-cyan');
-    btn.classList.add('btn-yellow');
-    
-    // Direct audio switch on exact click event
-    try {
-      mainTrack.pause();
-      cuteTrack.currentTime = 0;
-      cuteTrack.play();
-      document.getElementById('trackLabel').innerText = "CUTE.MP3";
-    } catch(e) {}
-  }
-
-  function muteAudio() {
-    try {
-      mainTrack.pause();
-      cuteTrack.pause();
-      document.getElementById('trackLabel').innerText = "MUTED";
-      synthFart();
-    } catch(e) {}
-  }
-
-  // RAVE MODE
-  let raveOn = false;
-  function toggleRaveMode() {
-    raveOn = !raveOn;
-    document.body.classList.toggle('rave-active', raveOn);
-    if (raveOn) {
-      unlockAndPlayCuteTrack();
-      synthBeep(1200);
-    }
-  }
-
-  // SYNTH SOUND EFFECTS
-  function synthFart() {
-    try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(140, ctx.currentTime);
-      osc.frequency.linearRampToValueAtTime(25, ctx.currentTime + 0.35);
-      gain.gain.setValueAtTime(0.3, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.35);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.35);
-    } catch(e) {}
-  }
-
-  function synthBeep(freq = 880) {
-    try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, ctx.currentTime);
-      gain.gain.setValueAtTime(0.1, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.12);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.12);
-    } catch(e) {}
-  }
-
-  // EMOJI PARTICLES
-  function spawnEmoji(symbol, x, y) {
-    const el = document.createElement('div');
-    el.innerText = symbol;
-    el.className = 'emoji-particle';
-    el.style.left = (x || Math.random() * (window.innerWidth - 70)) + 'px';
-    el.style.top = (y || Math.random() * (window.innerHeight - 70)) + 'px';
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 1200);
-  }
-
-  // HEARTS & FARTS
-  let hearts = 0;
-  let farts = 0;
-
-  function triggerHeart(e) {
-    hearts++;
-    document.getElementById('hNum').innerText = hearts;
-    synthBeep();
-    spawnEmoji('💖', e.clientX, e.clientY);
-
-    // EXACT 12th HEART UNLOCK & PLAY
-    if (hearts === 12) {
-      document.getElementById('statusBanner').innerText = "💖 12 HEARTS! CUTE.MP3 UNLOCKED AND PLAYING!";
-      triggerSpam("💖 12 HEARTS REACHED! CUTE.MP3 HAS NOW UNLOCKED & PLAYING!");
-      unlockAndPlayCuteTrack();
-      for (let i = 0; i < 12; i++) {
-        setTimeout(() => { synthBeep(900 + i * 50); spawnEmoji('💖'); }, i * 100);
+    // 1. Fetch Existing Entries
+    async function fetchEntries() {
+      try {
+        const res = await fetch(`${API_URL}/latest`, {
+          headers: { 'X-Access-Key': API_KEY }
+        });
+        if (!res.ok) throw new Error('Failed to load guestbook entries.');
+        const data = await res.json();
+        renderEntries(data.record.entries || []);
+      } catch (err) {
+        entriesContainer.innerHTML = '<p style="color:red;">Error loading entries. Check configuration key.</p>';
       }
     }
-  }
 
-  function triggerFart(e) {
-    farts++;
-    document.getElementById('fNum').innerText = farts;
-    synthFart();
-    spawnEmoji('💨', e.clientX, e.clientY);
-
-    if (farts % 10 === 0) {
-      document.getElementById('statusBanner').innerText = "💨 FART OVERFLOW!";
-      document.body.classList.add('shake-active');
-      setTimeout(() => document.body.classList.remove('shake-active'), 1500);
-      for (let i = 0; i < 10; i++) {
-        setTimeout(() => { synthFart(); spawnEmoji('💨'); }, i * 120);
+    // 2. Render Entries cleanly
+    function renderEntries(entries) {
+      entryCount.textContent = entries.length;
+      if (entries.length === 0) {
+        entriesContainer.innerHTML = '<p>No entries yet. Be the first to post!</p>';
+        return;
       }
-    }
-  }
-
-  // 15-CLICK MILKY ROBINSON UNLOCK & RE-BLUR
-  let dnc15Left = 15;
-  function clickDoNotClick15() {
-    if (dnc15Left > 1) {
-      dnc15Left--;
-      document.getElementById('dncCount').innerText = dnc15Left;
-      synthBeep(400 + (15 - dnc15Left) * 40);
-    } else {
-      document.getElementById('dncCount').innerText = 0;
-      document.getElementById('milkyImg').classList.remove('blurred');
-      document.getElementById('previewModal').style.display = 'block';
-      synthFart();
-    }
-  }
-
-  function closePreviewModal() {
-    document.getElementById('previewModal').style.display = 'none';
-    document.getElementById('milkyImg').classList.add('blurred');
-    dnc15Left = 15;
-    document.getElementById('dncCount').innerText = dnc15Left;
-  }
-
-  // 5-CLICK THREAT & SCARY FOLLOWER SYSTEM
-  let threatLeft = 5;
-  function clickThreatButton() {
-    if (threatLeft > 1) {
-      threatLeft--;
-      document.getElementById('threatCount').innerText = threatLeft;
-      synthBeep(300 + (5 - threatLeft) * 100);
-    } else {
-      threatLeft = 5;
-      document.getElementById('threatCount').innerText = threatLeft;
-      trigger200TimmyBurdsAndScaryFollower();
-    }
-  }
-
-  function trigger200TimmyBurdsAndScaryFollower() {
-    // 1. Spawn 200 scary Timmy Burds
-    for (let i = 0; i < 200; i++) {
-      setTimeout(() => {
-        const img = document.createElement('img');
-        img.src = "IMG_9494.jpeg";
-        img.className = 'timmy-pop';
-        img.style.left = Math.random() * (window.innerWidth - 80) + 'px';
-        img.style.top = Math.random() * (window.innerHeight - 80) + 'px';
-        img.onerror = () => img.remove();
-        document.body.appendChild(img);
-        if (i % 5 === 0) synthFart();
-        setTimeout(() => img.remove(), 2000);
-      }, i * 15);
+      
+      // Show newest first
+      entriesContainer.innerHTML = entries.slice().reverse().map(entry => `
+        <div class="entry-card">
+          <div class="entry-header">
+            <span>${escapeHTML(entry.author)}</span>
+            <span class="entry-date">${entry.timestamp}</span>
+          </div>
+          <div class="entry-body">${escapeHTML(entry.message)}</div>
+        </div>
+      `).join('');
     }
 
-    // 2. Activate scary mouse follower for 15 seconds
-    const follower = document.getElementById('scaryFollower');
-    follower.style.display = 'block';
+    // 3. Post New Entry with Effects Trigger
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const author = document.getElementById('author').value.trim();
+      const message = document.getElementById('message').value.trim();
+      
+      if (!author || !message) return;
 
-    const followHandler = (e) => {
-      follower.style.left = e.clientX + 'px';
-      follower.style.top = e.clientY + 'px';
-    };
+      statusMsg.style.color = 'black';
+      statusMsg.textContent = 'Posting to guestbook...';
 
-    window.addEventListener('mousemove', followHandler);
+      try {
+        // Retrieve current state
+        const getRes = await fetch(`${API_URL}/latest`, {
+          headers: { 'X-Access-Key': API_KEY }
+        });
+        const currentData = await getRes.json();
+        const currentEntries = currentData.record.entries || [];
 
-    // Continuous fart sounds & fart clouds while following
-    const fartInterval = setInterval(() => {
-      synthFart();
-      const rect = follower.getBoundingClientRect();
-      spawnEmoji('💨', rect.left + 20, rect.top + 20);
-    }, 400);
+        // Append new entry
+        const newEntry = {
+          author,
+          message,
+          timestamp: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+        };
+        currentEntries.push(newEntry);
 
-    // Stop following after 15 seconds
-    setTimeout(() => {
-      follower.style.display = 'none';
-      window.removeEventListener('mousemove', followHandler);
-      clearInterval(fartInterval);
-    }, 15000);
-  }
+        // Update database
+        const putRes = await fetch(API_URL, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Access-Key': API_KEY
+          },
+          body: JSON.stringify({ entries: currentEntries })
+        });
 
-  // OLD-SCHOOL VIRUS SPAM CASCADE
-  function runVirusSpamCascade() {
-    const messages = [
-      "MY CUTE SON! 💖💖💖",
-      "MY CUTE SON! 💖💖💖",
-      "MY CUTE SON! 💖💖💖",
-      "MY CUTE SON! 💖💖💖",
-      "MY CUTE SON! 💖💖💖",
-      "MY CUTE SON! 💖💖💖",
-      "MY CUTE SON! 💖💖💖",
-      "MY CUTE SON! 💖💖💖",
-      "MY CUTE SON! 💖💖💖",
-      "💨 FARTS 💨"
-    ];
-
-    messages.forEach((msg, index) => {
-      setTimeout(() => {
-        spawnSingleVirusPopup(msg, index);
-        synthBeep(800 + index * 100);
-        if (index === messages.length - 1) {
-          synthFart();
-          highlightCuteSonBox();
+        if (putRes.ok) {
+          statusMsg.style.color = 'green';
+          statusMsg.textContent = 'Entry posted successfully!';
+          form.reset();
+          renderEntries(currentEntries);
+          
+          // Trigger optional sound or heart/fart particle burst here
+          triggerPostAnimation();
+        } else {
+          throw new Error('Save failed');
         }
-      }, index * 220);
+      } catch (err) {
+        statusMsg.style.color = 'red';
+        statusMsg.textContent = 'Failed to post entry. Try again!';
+      }
     });
-  }
 
-  function spawnSingleVirusPopup(text, offsetIndex) {
-    const pop = document.createElement('div');
-    pop.className = 'win-popup';
-    pop.style.display = 'block';
-    pop.style.top = Math.min(window.innerHeight - 150, 80 + offsetIndex * 35) + 'px';
-    pop.style.left = Math.min(window.innerWidth - 290, 80 + offsetIndex * 40) + 'px';
-    pop.style.zIndex = 100000 + offsetIndex;
+    // Utility: XSS prevention
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
 
-    pop.innerHTML = `
-      <div class="win-titlebar">
-        <span>VIRUS_ALERT_${offsetIndex}.EXE</span>
-        <button onclick="this.parentElement.parentElement.remove()" style="background:#c0c0c0; border:1px outset #fff; font-weight:bold; cursor:pointer;">X</button>
-      </div>
-      <div class="win-body">
-        <p style="color:#ff0000; font-weight:bold; margin-bottom:8px; font-size:1rem;">${text}</p>
-        <button class="retro-btn btn-yellow" onclick="this.parentElement.parentElement.remove()">OK</button>
-      </div>
-    `;
-    document.body.appendChild(pop);
-  }
+    // Interactive Callback Hook
+    function triggerPostAnimation() {
+      // Plug in custom confetti, sound playback, or window spawns here
+      console.log('Entry submitted successfully!');
+    }
 
-  function highlightCuteSonBox() {
-    const box = document.getElementById('cuteSonBox');
-    box.classList.add('son-card-highlight');
-    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => {
-      box.classList.remove('son-card-highlight');
-    }, 6000);
-  }
-
-  // GENERAL SPAM MODAL
-  function triggerSpam(msg) {
-    document.getElementById('spamText').innerText = msg;
-    const modal = document.getElementById('spamModal');
-    modal.style.top = Math.floor(Math.random() * 40 + 20) + '%';
-    modal.style.left = Math.floor(Math.random() * 40 + 20) + '%';
-    modal.style.display = 'block';
-    synthBeep(1100);
-  }
-
-  function closeSpam() {
-    document.getElementById('spamModal').style.display = 'none';
-  }
-
-  // RETRO EMOJI GUESTBOOK
-  function addEmojiReaction(emoji) {
-    let list = [];
-    try { list = JSON.parse(localStorage.getItem('mcs_emojis') || '[]'); } catch(e) {}
-    list.unshift({ emoji, time: new Date().toLocaleTimeString() });
-    try { localStorage.setItem('mcs_emojis', JSON.stringify(list)); } catch(e) {}
-    renderGuestbook();
-  }
-
-  function renderGuestbook() {
-    let list = [];
-    try { list = JSON.parse(localStorage.getItem('mcs_emojis') || '[{"emoji":"🚽"},{"emoji":"💨"}]'); } catch(e) {}
-    document.getElementById('gbWall').innerHTML = list.map(item => `
-      <span style="font-size:1.3rem; margin-right:5px;">${item.emoji}</span>
-    `).join('');
-  }
-
-  // HIT COUNTER
-  function initHitCounter() {
-    let hits = 420;
-    try {
-      hits = parseInt(localStorage.getItem('mcs_hits') || '420') + 1;
-      localStorage.setItem('mcs_hits', hits);
-    } catch(e) {}
-    document.getElementById('counter').innerText = String(hits).padStart(6, '0');
-  }
-
-  window.onload = () => {
-    renderGuestbook();
-    initHitCounter();
-  };
-</script>
+    // Initial Load
+    fetchEntries();
+  </script>
 </body>
 </html>
