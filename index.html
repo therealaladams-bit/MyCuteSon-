@@ -2,15 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>MyCuteSon Guestbook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to MyCuteSon.com!</title>
   <style>
-    /* Classic 90s Guestbook Aesthetic */
+    /* ==========================================================================
+       1. RETRO WIN95 AESTHETIC & CORE STYLES
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+    }
+    
     body {
-      background-color: #008080;
+      background-color: #008080; /* Win95 Classic Teal */
       font-family: "Courier New", Courier, monospace;
       color: #000;
+      margin: 0;
       padding: 20px;
+      overflow-x: hidden;
+      cursor: default;
     }
+
+    /* Particle Canvas Overlay */
+    #particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Windows Styling */
     .window {
       background: #c0c0c0;
       border: 2px solid #fff;
@@ -20,7 +43,9 @@
       max-width: 650px;
       margin: 0 auto 20px auto;
       box-shadow: 4px 4px 0px #000;
+      position: relative;
     }
+
     .title-bar {
       background: navy;
       color: white;
@@ -29,26 +54,45 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      cursor: move;
+      user-select: none;
     }
+
+    .title-bar-buttons button {
+      width: 18px;
+      height: 18px;
+      font-size: 10px;
+      font-weight: bold;
+      line-height: 10px;
+      padding: 0;
+      background: #c0c0c0;
+      border: 1px outset #fff;
+      cursor: pointer;
+    }
+
     .window-body {
       padding: 15px;
     }
+
+    /* Form Elements */
     .form-group {
       margin-bottom: 12px;
     }
+
     label {
       display: block;
       font-weight: bold;
       margin-bottom: 4px;
     }
+
     input[type="text"], textarea {
       width: 100%;
-      padding: 6px;
+      padding: 8px;
       border: 2px inset #fff;
       background: #fff;
       font-family: inherit;
-      box-sizing: border-box;
     }
+
     .btn-retro {
       background: #c0c0c0;
       border: 2px outset #fff;
@@ -56,15 +100,19 @@
       font-weight: bold;
       cursor: pointer;
     }
+
     .btn-retro:active {
       border-style: inset;
     }
+
+    /* Guestbook Entry Display */
     .entry-card {
       background: #fff;
       border: 2px inset #808080;
       padding: 10px;
       margin-bottom: 15px;
     }
+
     .entry-header {
       font-weight: bold;
       border-bottom: 1px dashed #808080;
@@ -72,124 +120,365 @@
       margin-bottom: 8px;
       color: #000080;
     }
+
     .entry-date {
       font-size: 0.8em;
       color: #666;
       float: right;
     }
+
+    /* Status & Debug UI */
     #status-msg {
       font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .status-bar {
+      border: 2px inset #fff;
+      padding: 4px 8px;
+      font-size: 11px;
+      background: #c0c0c0;
+      margin-top: 10px;
+    }
+
+    /* Hit Counter */
+    .hit-counter {
+      background: #000;
+      color: #00ff00;
+      font-family: "Consolas", monospace;
+      padding: 4px 8px;
+      border: 2px inset #808080;
+      display: inline-block;
+      letter-spacing: 2px;
+    }
+
+    /* Interactive Action Buttons */
+    .action-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .achievements-panel {
+      background: #e0e0e0;
+      border: 1px dashed #808080;
+      padding: 8px;
+      font-size: 12px;
       margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Sign Guestbook Form Window -->
-  <div class="window">
+  <!-- Particle Effect Layer -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- WINDOW 1: Main Control & Guestbook Entry -->
+  <div class="window" id="window-form">
     <div class="title-bar">
-      <span>Sign the Guestbook!</span>
-      <span>[X]</span>
+      <span>Welcome to MyCuteSon.com v2.0</span>
+      <div class="title-bar-buttons">
+        <button onclick="alert('MyCuteSon.com initialized!')">?</button>
+      </div>
     </div>
     <div class="window-body">
+      
+      <!-- Interactive FX Trigger Buttons -->
+      <div class="action-bar">
+        <button class="btn-retro" onclick="triggerParticles('hearts', 20)">❤️ Love</button>
+        <button class="btn-retro" onclick="triggerParticles('farts', 20)">💨 Fart</button>
+        <button class="btn-retro" onclick="playCuteSound()">🔊 Test cute.mp3</button>
+      </div>
+
+      <!-- Guestbook Submission Form -->
       <form id="guestbook-form">
         <div class="form-group">
-          <label for="author">Your Name / Handle:</label>
-          <input type="text" id="author" required placeholder="e.g. xX_CoolGuy_Xx">
+          <label for="author">Your Handle / Name:</label>
+          <input type="text" id="author" required placeholder="e.g. xX_CuteFan_Xx" autocomplete="off">
         </div>
         <div class="form-group">
-          <label for="message">Your Message:</label>
-          <textarea id="message" rows="4" required placeholder="Leave a note for the site!"></textarea>
+          <label for="message">Your Guestbook Message:</label>
+          <textarea id="message" rows="3" required placeholder="Leave a sweet (or funny) note!"></textarea>
         </div>
-        <button type="submit" class="btn-retro" id="submit-btn">Post Entry 🚀</button>
+        <button type="submit" class="btn-retro" id="submit-btn">Sign Guestbook! 🚀</button>
       </form>
+
       <div id="status-msg"></div>
+
+      <!-- System Status Bar -->
+      <div class="status-bar">
+        <span>Audio Engine: <strong id="audio-status">Initializing...</strong></span>
+      </div>
+
+      <!-- Local Achievements Tracker -->
+      <div class="achievements-panel">
+        <strong>Achievements Unlocked:</strong>
+        <div>Posts Signed: <span id="stat-posts">0</span> | Hearts Spawned: <span id="stat-hearts">0</span> | Farts Fired: <span id="stat-farts">0</span></div>
+      </div>
     </div>
   </div>
 
-  <!-- Full Guestbook Feed Window -->
-  <div class="window">
+  <!-- WINDOW 2: Guestbook Archive Feed & Counter -->
+  <div class="window" id="window-feed">
     <div class="title-bar">
-      <span>Guestbook Entries (<span id="entry-count">0</span>)</span>
+      <span>Guestbook Entries Log</span>
+      <div class="title-bar-buttons">
+        <button onclick="fetchEntries()">🔄</button>
+      </div>
     </div>
     <div class="window-body">
-      <div id="entries-container">Loading entries...</div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <span>Total Visitors: <div class="hit-counter" id="hit-counter">000421</div></span>
+        <span>Total Signatures: <strong id="entry-count">0</strong></span>
+      </div>
+
+      <div id="entries-container">Loading guestbook posts...</div>
     </div>
   </div>
 
   <script>
-    // Configuration - Replace with your active JSONBin Bin ID and Access Key
-    const BIN_ID = 'YOUR_JSONBIN_BIN_ID';
-    const API_KEY = 'YOUR_JSONBIN_API_KEY';
+    /* ==========================================================================
+       2. CONFIGURATION & DATABASE SETTINGS
+       ========================================================================== */
+    const BIN_ID = 'YOUR_JSONBIN_BIN_ID';    // Replace with your JSONBin Bin ID
+    const API_KEY = 'YOUR_JSONBIN_API_KEY';   // Replace with your JSONBin API Access Key
+    const AUDIO_URL = './cute.mp3';            // Relative path to cute.mp3
     const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
     const form = document.getElementById('guestbook-form');
     const statusMsg = document.getElementById('status-msg');
+    const audioStatus = document.getElementById('audio-status');
     const entriesContainer = document.getElementById('entries-container');
     const entryCount = document.getElementById('entry-count');
 
-    // 1. Fetch Existing Entries
+    /* ==========================================================================
+       3. SCIENTIFIC AUDIO ENGINE (Web Audio API + Fallback Buffer)
+       ========================================================================== */
+    let audioCtx = null;
+    let audioBuffer = null;
+    let htmlAudioFallback = null;
+    let isAudioUnlocked = false;
+
+    async function initAudioEngine() {
+      try {
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+
+        const response = await fetch(AUDIO_URL);
+        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+        const arrayBuffer = await response.arrayBuffer();
+        audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+        audioStatus.textContent = 'Web Audio Pre-Buffered';
+      } catch (err) {
+        console.warn('Web Audio API fallback active:', err);
+        audioStatus.textContent = 'HTML5 Audio Mode';
+        htmlAudioFallback = new Audio(AUDIO_URL);
+        htmlAudioFallback.preload = 'auto';
+      }
+    }
+
+    function unlockAudioContext() {
+      if (isAudioUnlocked) return;
+
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume().then(() => {
+          isAudioUnlocked = true;
+          audioStatus.textContent = 'Ready & Unlocked';
+        });
+      } else {
+        isAudioUnlocked = true;
+      }
+
+      if (htmlAudioFallback) {
+        htmlAudioFallback.play().then(() => {
+          htmlAudioFallback.pause();
+          htmlAudioFallback.currentTime = 0;
+        }).catch(() => {});
+      }
+    }
+
+    ['click', 'keydown', 'touchstart'].forEach(evt => {
+      document.addEventListener(evt, unlockAudioContext, { once: true });
+    });
+
+    function playCuteSound() {
+      unlockAudioContext();
+      if (audioCtx && audioBuffer) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const source = audioCtx.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(audioCtx.destination);
+        source.start(0);
+        return;
+      }
+
+      if (htmlAudioFallback) {
+        htmlAudioFallback.currentTime = 0;
+        htmlAudioFallback.play().catch(e => console.error("Playback error:", e));
+      }
+    }
+
+    /* ==========================================================================
+       4. PARTICLE ANIMATION ENGINE (Hearts & Farts Canvas)
+       ========================================================================== */
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function triggerParticles(type, count = 15) {
+      const startX = window.innerWidth / 2;
+      const startY = window.innerHeight / 2;
+
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: startX,
+          y: startY,
+          vx: (Math.random() - 0.5) * 8,
+          vy: (Math.random() - 0.5) * 8 - 2,
+          size: Math.random() * 16 + 12,
+          alpha: 1,
+          type: type,
+          symbol: type === 'hearts' ? '❤️' : '💨'
+        });
+      }
+
+      // Update Local Achievement Metrics
+      if (type === 'hearts') updateStat('stat-hearts', count);
+      if (type === 'farts') updateStat('stat-farts', count);
+    }
+
+    function renderParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.015;
+
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.font = `${p.size}px sans-serif`;
+        ctx.fillText(p.symbol, p.x, p.y);
+
+        if (p.alpha <= 0) particles.splice(i, 1);
+      }
+      requestAnimationFrame(renderParticles);
+    }
+    renderParticles();
+
+    /* ==========================================================================
+       5. DRAGGABLE WINDOWS CONTROLLER
+       ========================================================================== */
+    function initDraggableWindows() {
+      const windows = document.querySelectorAll('.window');
+      windows.forEach(win => {
+        const header = win.querySelector('.title-bar');
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+        header.onmousedown = (e) => {
+          e.preventDefault();
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+
+          // Bring active window to front
+          windows.forEach(w => w.style.zIndex = "1");
+          win.style.zIndex = "10";
+
+          document.onmousemove = (e) => {
+            e.preventDefault();
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            win.style.top = (win.offsetTop - pos2) + "px";
+            win.style.left = (win.offsetLeft - pos1) + "px";
+          };
+
+          document.onmouseup = () => {
+            document.onmousemove = null;
+            document.onmouseup = null;
+          };
+        };
+      });
+    }
+
+    /* ==========================================================================
+       6. JSONBIN GUESTBOOK DATA ENGINE
+       ========================================================================== */
     async function fetchEntries() {
+      if (BIN_ID === 'YOUR_JSONBIN_BIN_ID') {
+        entriesContainer.innerHTML = '<p style="color:red;">Enter your BIN_ID and API_KEY in the code to sync live database entries.</p>';
+        return;
+      }
+
       try {
         const res = await fetch(`${API_URL}/latest`, {
           headers: { 'X-Access-Key': API_KEY }
         });
-        if (!res.ok) throw new Error('Failed to load guestbook entries.');
+        if (!res.ok) throw new Error('Failed to load posts');
         const data = await res.json();
-        renderEntries(data.record.entries || []);
+        const entries = Array.isArray(data.record?.entries) ? data.record.entries : [];
+        renderEntries(entries);
       } catch (err) {
-        entriesContainer.innerHTML = '<p style="color:red;">Error loading entries. Check configuration key.</p>';
+        console.error(err);
+        entriesContainer.innerHTML = '<p style="color:red;">Error connecting to Guestbook server.</p>';
       }
     }
 
-    // 2. Render Entries cleanly
     function renderEntries(entries) {
       entryCount.textContent = entries.length;
       if (entries.length === 0) {
-        entriesContainer.innerHTML = '<p>No entries yet. Be the first to post!</p>';
+        entriesContainer.innerHTML = '<p>No entries yet. Leave the first one!</p>';
         return;
       }
-      
-      // Show newest first
+
       entriesContainer.innerHTML = entries.slice().reverse().map(entry => `
         <div class="entry-card">
           <div class="entry-header">
             <span>${escapeHTML(entry.author)}</span>
             <span class="entry-date">${entry.timestamp}</span>
           </div>
-          <div class="entry-body">${escapeHTML(entry.message)}</div>
+          <div>${escapeHTML(entry.message)}</div>
         </div>
       `).join('');
     }
 
-    // 3. Post New Entry with Effects Trigger
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      unlockAudioContext();
+
       const author = document.getElementById('author').value.trim();
       const message = document.getElementById('message').value.trim();
-      
+
       if (!author || !message) return;
 
       statusMsg.style.color = 'black';
-      statusMsg.textContent = 'Posting to guestbook...';
+      statusMsg.textContent = 'Sending to guestbook...';
 
       try {
-        // Retrieve current state
+        // Fetch existing entries array
         const getRes = await fetch(`${API_URL}/latest`, {
           headers: { 'X-Access-Key': API_KEY }
         });
         const currentData = await getRes.json();
-        const currentEntries = currentData.record.entries || [];
+        const currentEntries = Array.isArray(currentData.record?.entries) ? currentData.record.entries : [];
 
-        // Append new entry
+        // Build new entry
+        const now = new Date();
         const newEntry = {
           author,
           message,
-          timestamp: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+          timestamp: now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
         currentEntries.push(newEntry);
 
-        // Update database
+        // Put request back to JSONBin
         const putRes = await fetch(API_URL, {
           method: 'PUT',
           headers: {
@@ -199,38 +488,58 @@
           body: JSON.stringify({ entries: currentEntries })
         });
 
-        if (putRes.ok) {
-          statusMsg.style.color = 'green';
-          statusMsg.textContent = 'Entry posted successfully!';
-          form.reset();
-          renderEntries(currentEntries);
-          
-          // Trigger optional sound or heart/fart particle burst here
-          triggerPostAnimation();
-        } else {
-          throw new Error('Save failed');
-        }
+        if (!putRes.ok) throw new Error('Database PUT write failed');
+
+        statusMsg.style.color = 'green';
+        statusMsg.textContent = 'Post published successfully!';
+        form.reset();
+
+        // Fire audio, particle burst & achievements
+        playCuteSound();
+        triggerParticles('hearts', 25);
+        updateStat('stat-posts', 1);
+        
+        renderEntries(currentEntries);
+
       } catch (err) {
+        console.error(err);
         statusMsg.style.color = 'red';
-        statusMsg.textContent = 'Failed to post entry. Try again!';
+        statusMsg.textContent = 'Error writing entry. Check network or API configuration.';
       }
     });
 
-    // Utility: XSS prevention
+    /* ==========================================================================
+       7. UTILITIES & METRICS
+       ========================================================================== */
     function escapeHTML(str) {
-      return str.replace(/[&<>'"]/g, 
+      return String(str).replace(/[&<>'"]/g, 
         tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
       );
     }
 
-    // Interactive Callback Hook
-    function triggerPostAnimation() {
-      // Plug in custom confetti, sound playback, or window spawns here
-      console.log('Entry submitted successfully!');
+    function updateStat(id, increment = 1) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.textContent = parseInt(el.textContent || 0) + increment;
+      }
     }
 
-    // Initial Load
-    fetchEntries();
+    // Fake retro hit counter increment
+    function initHitCounter() {
+      const countEl = document.getElementById('hit-counter');
+      let val = Math.floor(Math.random() * 50) + 400;
+      countEl.textContent = String(val).padStart(6, '0');
+    }
+
+    /* ==========================================================================
+       8. INITIALIZATION BOOTSTRAP
+       ========================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      initAudioEngine();
+      initDraggableWindows();
+      initHitCounter();
+      fetchEntries();
+    });
   </script>
 </body>
 </html>
