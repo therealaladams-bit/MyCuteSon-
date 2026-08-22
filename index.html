@@ -110,6 +110,7 @@
       height: 240px;
       object-fit: cover;
       border: 2px solid #00ffff;
+      cursor: pointer;
     }
 
     .blurred-son {
@@ -121,7 +122,7 @@
       animation: flashText 0.5s infinite alternate;
       color: #ff00ff;
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     @keyframes flashText {
@@ -193,7 +194,9 @@
 </head>
 <body>
 
+  <!-- AUDIO ELEMENTS -->
   <audio id="cuteAudio" src="My%20cute%20son.mp3" loop></audio>
+  <audio id="cuteSongAlt" src="cute.mp3" loop></audio>
 
   <!-- UNLOCK POPUP MODAL -->
   <div id="unlock-modal" class="modal">
@@ -206,7 +209,7 @@
 
   <div class="container">
     <div class="banner">
-      <h1>✨ MYCUTESON.COM ✨</h1>
+      <h1 onclick="triggerSecret('title')">✨ MYCUTESON.COM ✨</h1>
       <marquee behavior="scroll" direction="left" style="color: #00ffff; font-weight: bold;">
         🔥 THIS WEEK'S CUTE SON HAS ARRIVED! FIND THE SECRET EASTER EGGS TO UNLOCK THE ULTIMATE FARTS & HEARTS! 🔥
       </marquee>
@@ -216,10 +219,11 @@
       📟 VISITOR COUNT: <span id="hit-count">001337</span> <span class="secret-spot">✨</span>
     </div>
 
-    <!-- AUDIO CONTROLS -->
+    <!-- DUAL AUDIO CONTROLS -->
     <div class="button-zone">
-      <button class="retro-btn" style="background: #ffff00; color: #000;" onclick="playCuteAudio()">🔊 BLAST CUTE AUDIO</button>
-      <button class="retro-btn btn-danger" onclick="muteAllAudio()">🔇 MUTE AUDIO & FART</button>
+      <button class="retro-btn" style="background: #ffff00; color: #000;" onclick="playCuteAudio()">🔊 BLAST CUTE SON AUDIO</button>
+      <button class="retro-btn" style="background: #00ffff; color: #000;" onclick="playCuteSongAlt()">🎵 BLAST CUTE SONG</button>
+      <button class="retro-btn btn-danger" onclick="muteAllAudio()">🔇 MUTE ALL AUDIO & FART</button>
     </div>
 
     <!-- CUTE SON SHOWCASE -->
@@ -234,7 +238,7 @@
       <!-- NEXT WEEK'S CUTE SON -->
       <div class="son-card">
         <h3 style="color: #00ffff; margin: 0 0 5px 0;">🔒 NEXT WEEK'S SON 🔒</h3>
-        <img id="next-week-img" src="IMG_9518.jpeg" class="son-img blurred-son" alt="Milky Robinson">
+        <img id="next-week-img" src="IMG_9518.jpeg" class="son-img blurred-son" alt="Milky Robinson" onclick="triggerSecret('milky')">
         <div style="color: #ff00ff; font-weight: bold; margin-top: 8px;">MILKY ROBINSON</div>
         <button id="do-not-click-btn" class="retro-btn btn-danger" style="margin-top: 5px; font-size: 0.8rem;" onclick="clickDoNotClick()">
           🚨 DO NOT CLICK (<span id="dnc-count">10</span> left) 🚨
@@ -252,7 +256,7 @@
     <div style="background: #000; border: 2px solid #ffff00; padding: 10px; margin: 15px 0;">
       <h3 style="color: #ff00ff; margin: 0;">🏆 SECRET EASTER EGGS FOUND: <span id="egg-count" style="color: #00ffff;">0</span> / 5</h3>
       <div id="achievement-banner" style="color: #00ff00; font-weight: bold; min-height: 25px; margin-top: 5px;">
-        Click around the page, pictures, and buttons to find hidden secrets!
+        Click around the page title, images, and visitor counter to find hidden secrets!
       </div>
     </div>
 
@@ -260,7 +264,7 @@
     <div class="guestbook-box">
       <h3 style="color: #ffff00; margin-top:0;">✏️ SIGN TIMMY BURD'S CUTE WALL OF FAME</h3>
       <input type="text" id="gb-name" class="input-field" placeholder="Your Handle (e.g. TimmyBurdFan99)" maxlength="30">
-      <textarea id="gb-msg" class="input-field" rows="3" placeholder="Leave a funny/whacky comment for the cute wall..." maxlength="200"></textarea>
+      <textarea id="gb-msg" class="input-field" rows="3" placeholder="Leave a funny message for the cute wall..." maxlength="200"></textarea>
       <button class="retro-btn" onclick="postComment()">POST TO CUTE WALL ⚡</button>
 
       <h4 style="color: #00ffff; margin-bottom: 5px; margin-top: 15px;">LIVE CUTE MESSAGES:</h4>
@@ -270,58 +274,86 @@
 
 <script>
   // AUDIO SYNTHESIZER
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  let audioCtx = null;
   let muted = false;
+
+  function initAudioContext() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  }
 
   function playBeep(freq, type, duration) {
     if (muted) return;
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = type;
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + duration);
+    initAudioContext();
+    try {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    } catch(e) {}
   }
 
   function triggerFartSound() {
     if (muted) return;
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(140, audioCtx.currentTime);
-    osc.frequency.linearRampToValueAtTime(30, audioCtx.currentTime + 0.45);
-    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.45);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.45);
+    initAudioContext();
+    try {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(140, audioCtx.currentTime);
+      osc.frequency.linearRampToValueAtTime(30, audioCtx.currentTime + 0.45);
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.45);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.45);
+    } catch(e) {}
+  }
+
+  function stopAllMusic() {
+    const a1 = document.getElementById('cuteAudio');
+    const a2 = document.getElementById('cuteSongAlt');
+    a1.pause(); a1.currentTime = 0;
+    a2.pause(); a2.currentTime = 0;
   }
 
   function playCuteAudio() {
+    initAudioContext();
+    stopAllMusic();
     const audio = document.getElementById('cuteAudio');
     audio.muted = false;
     muted = false;
-    audio.currentTime = 0;
-    audio.play().catch(e => alert("Tap screen first to allow audio!"));
+    audio.play().catch(e => console.log("User interaction required to play audio"));
+  }
+
+  function playCuteSongAlt() {
+    initAudioContext();
+    stopAllMusic();
+    const audio = document.getElementById('cuteSongAlt');
+    audio.muted = false;
+    muted = false;
+    audio.play().catch(e => console.log("User interaction required to play audio"));
   }
 
   function muteAllAudio() {
-    const audio = document.getElementById('cuteAudio');
-    audio.pause();
-    audio.currentTime = 0;
+    stopAllMusic();
     triggerFartSound(); // Plays final fart as it shuts down music
     muted = true;
     alert("🔇 ALL AUDIO MUTED! (Plus a bonus shutdown fart!)");
   }
 
-  // PNG PARTICLE FILENAMES FROM YOUR REPO
+  // PNG PARTICLE FILENAMES
   const HEART_IMG = "pngtree-smooth-glossy-heart-vector-file-ai-and-png-y315-10332808.png";
   const FART_IMG = "Unique-Fart-Cloud-Concept-PNG.png";
 
@@ -329,6 +361,7 @@
     let img = document.createElement('img');
     img.src = imgSrc;
     img.className = 'particle-img';
+    img.onerror = () => img.remove();
     img.style.left = (x || (Math.random() * (window.innerWidth - 100) + 50)) + 'px';
     img.style.top = (y || (Math.random() * (window.innerHeight - 100) + 50)) + 'px';
     document.body.appendChild(img);
@@ -346,7 +379,7 @@
     spawnPNGParticle(FART_IMG, e.clientX, e.clientY);
 
     // 10 FARTS REWARD: 5x2 = 10 Farts for you my cute boy!
-    if (fartCount === 10) {
+    if (fartCount % 10 === 0) {
       trigger10FartsSequence();
     }
   }
@@ -359,7 +392,7 @@
       setTimeout(() => {
         triggerFartSound();
         spawnPNGParticle(FART_IMG);
-      }, i * 200);
+      }, i * 180);
     }
   }
 
@@ -370,7 +403,7 @@
     spawnPNGParticle(HEART_IMG, e.clientX, e.clientY);
 
     // 12 HEARTS REWARD: 6x2 = 12 hearts for you my cute boy
-    if (heartCount === 12) {
+    if (heartCount % 12 === 0) {
       trigger12HeartsSequence();
     }
   }
@@ -383,7 +416,7 @@
       setTimeout(() => {
         playBeep(1000 + (i * 50), 'triangle', 0.15);
         spawnPNGParticle(HEART_IMG);
-      }, i * 150);
+      }, i * 140);
     }
   }
 
@@ -399,7 +432,7 @@
       document.getElementById('next-week-img').classList.remove('blurred-son');
       document.getElementById('unlock-modal').classList.add('modal-active');
       playBeep(1200, 'sine', 0.4);
-      trigger10FartsSequence(); // Extra funny noise reward!
+      trigger10FartsSequence();
       triggerSecret('dnc');
     }
   }
@@ -423,49 +456,48 @@
     }
   }
 
-  // REAL-TIME HIT COUNTER
-  async function updateHitCounter() {
-    try {
-      const res = await fetch('https://api.countapi.xyz/hit/mycuteson.com/visits');
-      const data = await res.json();
-      document.getElementById('hit-count').innerText = String(data.value).padStart(6, '0');
-    } catch (err) {
-      let count = parseInt(localStorage.getItem('mycuteson_hits') || '1337') + 1;
-      localStorage.setItem('mycuteson_hits', count);
-      document.getElementById('hit-count').innerText = String(count).padStart(6, '0');
-    }
+  // RELIABLE VISITOR COUNTER
+  function updateHitCounter() {
+    let count = parseInt(localStorage.getItem('mycuteson_hits') || '1337') + 1;
+    localStorage.setItem('mycuteson_hits', count);
+    document.getElementById('hit-count').innerText = String(count).padStart(6, '0');
   }
 
-  // JSONBIN DATABASE INTEGRATION
+  // ROBUST LOCAL + REMOTE GUESTBOOK
   const BIN_ID = "6a88fdf3f5f4af5e29338aba";
   const MASTER_KEY = "$2a$10$bQy3M4NBos5erk8.HqlQd.2Yk/7rGmXW6ExlVAXlMQNsu95DooKWO";
   const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-  async function loadLiveComments() {
-    const wall = document.getElementById('comments-wall');
-    wall.innerHTML = `<p style="color: #ffff00; text-align: center; font-size: 0.85rem;">Loading cute fan messages...</p>`;
+  function getLocalComments() {
+    return JSON.parse(localStorage.getItem('mycuteson_comments') || '[{"name":"Timmy Burd Fan","msg":"Timmy Burd is the cutest son ever!"}]');
+  }
 
+  function renderComments(comments) {
+    const wall = document.getElementById('comments-wall');
+    if (!comments || comments.length === 0) {
+      wall.innerHTML = `<p style="color: #00ffff; font-size: 0.85rem; text-align: center;">No messages yet! Be the first to sign Timmy Burd's wall!</p>`;
+      return;
+    }
+    wall.innerHTML = comments.map(c => `
+      <div class="comment-card">
+        <div style="color: #ff00ff; font-weight: bold;">✏️ ${escapeHtml(c.name || 'Anonymous Cute Boy')}:</div>
+        <div style="color: #ffffff; margin-top: 3px;">${escapeHtml(c.msg || '')}</div>
+      </div>
+    `).join('');
+  }
+
+  async function loadLiveComments() {
     try {
       const res = await fetch(`${API_URL}/latest`, {
         headers: { "X-Master-Key": MASTER_KEY }
       });
-      const data = await res.json();
-      const comments = data.record || [];
-
-      if (comments.length === 0) {
-        wall.innerHTML = `<p style="color: #00ffff; font-size: 0.85rem; text-align: center;">No messages yet! Be the first to sign Timmy Burd's wall!</p>`;
+      if (res.ok) {
+        const data = await res.json();
+        renderComments(data.record || []);
         return;
       }
-
-      wall.innerHTML = comments.map(c => `
-        <div class="comment-card">
-          <div style="color: #ff00ff; font-weight: bold;">✏️ ${escapeHtml(c.name || 'Anonymous Cute Boy')}:</div>
-          <div style="color: #ffffff; margin-top: 3px;">${escapeHtml(c.msg || '')}</div>
-        </div>
-      `).join('');
-    } catch (err) {
-      wall.innerHTML = `<p style="color: #ff0000; font-size: 0.85rem; text-align: center;">Failed to load live comments.</p>`;
-    }
+    } catch (err) {}
+    renderComments(getLocalComments());
   }
 
   async function postComment() {
@@ -479,36 +511,26 @@
       return;
     }
 
+    let localComms = getLocalComments();
+    localComms.unshift({ name, msg });
+    localStorage.setItem('mycuteson_comments', JSON.stringify(localComms));
+
     try {
-      const getRes = await fetch(`${API_URL}/latest`, {
-        headers: { "X-Master-Key": MASTER_KEY }
-      });
-      const currentData = await getRes.json();
-      let comments = currentData.record || [];
-
-      comments.unshift({ name: name, msg: msg });
-
-      const updateRes = await fetch(API_URL, {
+      await fetch(API_URL, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "X-Master-Key": MASTER_KEY
         },
-        body: JSON.stringify(comments)
+        body: JSON.stringify(localComms)
       });
+    } catch(err) {}
 
-      if (updateRes.ok) {
-        nameInput.value = '';
-        msgInput.value = '';
-        loadLiveComments();
-        triggerSecret('guestbook');
-        alert("⚡ POSTED TO TIMMY BURD'S CUTE WALL! ⚡");
-      } else {
-        alert("Error saving comment. Try again!");
-      }
-    } catch (err) {
-      alert("Network error posting comment.");
-    }
+    nameInput.value = '';
+    msgInput.value = '';
+    renderComments(localComms);
+    triggerSecret('guestbook');
+    alert("⚡ POSTED TO TIMMY BURD'S CUTE WALL! ⚡");
   }
 
   function escapeHtml(str) {
