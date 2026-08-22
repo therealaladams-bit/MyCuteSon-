@@ -6,7 +6,7 @@
   <title>Welcome to MyCuteSon.com!</title>
   <style>
     /* ==========================================================================
-       1. RETRO WIN95 AESTHETIC & CORE STYLES
+       1. RETRO WIN95 & RAVE MODE STYLES
        ========================================================================== */
     * {
       box-sizing: border-box;
@@ -20,6 +20,21 @@
       padding: 20px;
       overflow-x: hidden;
       cursor: default;
+      transition: background-color 0.2s ease;
+    }
+
+    /* Rave Mode Flashing Effect */
+    body.rave-mode {
+      animation: raveRainbow 0.5s infinite linear;
+    }
+
+    @keyframes raveRainbow {
+      0% { background-color: #ff0000; }
+      20% { background-color: #ff00ff; }
+      40% { background-color: #0000ff; }
+      60% { background-color: #00ffff; }
+      80% { background-color: #00ff00; }
+      100% { background-color: #ffff00; }
     }
 
     /* Particle Canvas Overlay */
@@ -33,7 +48,7 @@
       z-index: 9999;
     }
 
-    /* Windows Styling */
+    /* Windows & Layout */
     .window {
       background: #c0c0c0;
       border: 2px solid #fff;
@@ -74,6 +89,36 @@
       padding: 15px;
     }
 
+    /* Character Profile Gallery */
+    .character-gallery {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .character-card {
+      background: #fff;
+      border: 2px inset #808080;
+      padding: 8px;
+      text-align: center;
+      width: 180px;
+    }
+
+    .character-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border: 1px solid #000;
+    }
+
+    .character-name {
+      font-weight: bold;
+      margin-top: 5px;
+      color: #000080;
+    }
+
     /* Form Elements */
     .form-group {
       margin-bottom: 12px;
@@ -103,6 +148,12 @@
 
     .btn-retro:active {
       border-style: inset;
+    }
+
+    .btn-danger {
+      background: #ff4d4d;
+      color: #fff;
+      font-weight: bold;
     }
 
     /* Guestbook Entry Display */
@@ -152,11 +203,11 @@
       letter-spacing: 2px;
     }
 
-    /* Interactive Action Buttons */
     .action-bar {
       display: flex;
       gap: 10px;
       margin-bottom: 15px;
+      flex-wrap: wrap;
     }
 
     .achievements-panel {
@@ -170,50 +221,68 @@
 </head>
 <body>
 
-  <!-- Particle Effect Layer -->
+  <!-- Particle Canvas Overlay -->
   <canvas id="particle-canvas"></canvas>
 
-  <!-- WINDOW 1: Main Control & Guestbook Entry -->
-  <div class="window" id="window-form">
+  <!-- WINDOW 1: Profile & Control Window -->
+  <div class="window" id="window-profile">
     <div class="title-bar">
-      <span>Welcome to MyCuteSon.com v2.0</span>
+      <span>Welcome to MyCuteSon.com!</span>
       <div class="title-bar-buttons">
-        <button onclick="alert('MyCuteSon.com initialized!')">?</button>
+        <button onclick="alert('MyCuteSon.com System Active!')">?</button>
       </div>
     </div>
     <div class="window-body">
       
-      <!-- Interactive FX Trigger Buttons -->
+      <!-- Character Image Showcase -->
+      <div class="character-gallery">
+        <div class="character-card">
+          <img src="IMG_9494.jpeg" alt="Timmy Burd" id="img-timmy" />
+          <div class="character-name">Timmy Burd</div>
+        </div>
+        <div class="character-card">
+          <img src="IMG_9518.jpeg" alt="Milky Robinson" id="img-milky" />
+          <div class="character-name">Milky Robinson</div>
+        </div>
+      </div>
+
+      <!-- Interactive FX & Secret Triggers -->
       <div class="action-bar">
-        <button class="btn-retro" onclick="triggerParticles('hearts', 20)">❤️ Love</button>
+        <button class="btn-retro" onclick="triggerParticles('hearts', 20)">❤️ Hearts</button>
         <button class="btn-retro" onclick="triggerParticles('farts', 20)">💨 Fart</button>
-        <button class="btn-retro" onclick="playCuteSound()">🔊 Test cute.mp3</button>
+        <button class="btn-retro" onclick="playCuteSound()">🔊 Play cute.mp3</button>
+        <button class="btn-retro btn-danger" onclick="doNotClickChallenge()">DO NOT CLICK</button>
       </div>
 
       <!-- Guestbook Submission Form -->
       <form id="guestbook-form">
         <div class="form-group">
-          <label for="author">Your Handle / Name:</label>
+          <label for="author">Your Name / Handle:</label>
           <input type="text" id="author" required placeholder="e.g. xX_CuteFan_Xx" autocomplete="off">
         </div>
         <div class="form-group">
-          <label for="message">Your Guestbook Message:</label>
-          <textarea id="message" rows="3" required placeholder="Leave a sweet (or funny) note!"></textarea>
+          <label for="message">Your Message:</label>
+          <textarea id="message" rows="3" required placeholder="Leave a sweet note!"></textarea>
         </div>
-        <button type="submit" class="btn-retro" id="submit-btn">Sign Guestbook! 🚀</button>
+        <button type="submit" class="btn-retro" id="submit-btn">Post Signature! 🚀</button>
       </form>
 
       <div id="status-msg"></div>
 
       <!-- System Status Bar -->
       <div class="status-bar">
-        <span>Audio Engine: <strong id="audio-status">Initializing...</strong></span>
+        <span>Audio Status: <strong id="audio-status">Initializing...</strong></span>
       </div>
 
-      <!-- Local Achievements Tracker -->
+      <!-- Achievements & Secret State Panel -->
       <div class="achievements-panel">
         <strong>Achievements Unlocked:</strong>
-        <div>Posts Signed: <span id="stat-posts">0</span> | Hearts Spawned: <span id="stat-hearts">0</span> | Farts Fired: <span id="stat-farts">0</span></div>
+        <div>
+          Signatures: <span id="stat-posts">0</span> | 
+          Hearts: <span id="stat-hearts">0</span> | 
+          Farts: <span id="stat-farts">0</span> |
+          Secrets Found: <span id="stat-secrets">0/1</span>
+        </div>
       </div>
     </div>
   </div>
@@ -221,18 +290,18 @@
   <!-- WINDOW 2: Guestbook Archive Feed & Counter -->
   <div class="window" id="window-feed">
     <div class="title-bar">
-      <span>Guestbook Entries Log</span>
+      <span>Guestbook Entries</span>
       <div class="title-bar-buttons">
         <button onclick="fetchEntries()">🔄</button>
       </div>
     </div>
     <div class="window-body">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <span>Total Visitors: <div class="hit-counter" id="hit-counter">000421</div></span>
-        <span>Total Signatures: <strong id="entry-count">0</strong></span>
+        <span>Hit Counter: <div class="hit-counter" id="hit-counter">000421</div></span>
+        <span>Total Entries: <strong id="entry-count">0</strong></span>
       </div>
 
-      <div id="entries-container">Loading guestbook posts...</div>
+      <div id="entries-container">Loading entries...</div>
     </div>
   </div>
 
@@ -251,8 +320,15 @@
     const entriesContainer = document.getElementById('entries-container');
     const entryCount = document.getElementById('entry-count');
 
+    /* Pre-load PNG particle assets */
+    const heartImg = new Image();
+    heartImg.src = 'heart.png';
+
+    const fartImg = new Image();
+    fartImg.src = 'fart.png';
+
     /* ==========================================================================
-       3. SCIENTIFIC AUDIO ENGINE (Web Audio API + Fallback Buffer)
+       3. AUDIO ENGINE (Web Audio API + HTML5 Fallback)
        ========================================================================== */
     let audioCtx = null;
     let audioBuffer = null;
@@ -268,10 +344,10 @@
         if (!response.ok) throw new Error(`HTTP error ${response.status}`);
         const arrayBuffer = await response.arrayBuffer();
         audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-        audioStatus.textContent = 'Web Audio Pre-Buffered';
+        audioStatus.textContent = 'Ready (Web Audio)';
       } catch (err) {
-        console.warn('Web Audio API fallback active:', err);
-        audioStatus.textContent = 'HTML5 Audio Mode';
+        console.warn('Fallback to HTML5 Audio:', err);
+        audioStatus.textContent = 'Ready (HTML5 Audio)';
         htmlAudioFallback = new Audio(AUDIO_URL);
         htmlAudioFallback.preload = 'auto';
       }
@@ -283,7 +359,7 @@
       if (audioCtx && audioCtx.state === 'suspended') {
         audioCtx.resume().then(() => {
           isAudioUnlocked = true;
-          audioStatus.textContent = 'Ready & Unlocked';
+          audioStatus.textContent = 'Unlocked & Active';
         });
       } else {
         isAudioUnlocked = true;
@@ -319,7 +395,7 @@
     }
 
     /* ==========================================================================
-       4. PARTICLE ANIMATION ENGINE (Hearts & Farts Canvas)
+       4. PARTICLE ENGINE (PNG Image Fallback to Emoji)
        ========================================================================== */
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
@@ -340,16 +416,14 @@
         particles.push({
           x: startX,
           y: startY,
-          vx: (Math.random() - 0.5) * 8,
-          vy: (Math.random() - 0.5) * 8 - 2,
-          size: Math.random() * 16 + 12,
+          vx: (Math.random() - 0.5) * 10,
+          vy: (Math.random() - 0.5) * 10 - 3,
+          size: Math.random() * 20 + 20,
           alpha: 1,
-          type: type,
-          symbol: type === 'hearts' ? '❤️' : '💨'
+          type: type
         });
       }
 
-      // Update Local Achievement Metrics
       if (type === 'hearts') updateStat('stat-hearts', count);
       if (type === 'farts') updateStat('stat-farts', count);
     }
@@ -363,8 +437,23 @@
         p.alpha -= 0.015;
 
         ctx.globalAlpha = Math.max(0, p.alpha);
-        ctx.font = `${p.size}px sans-serif`;
-        ctx.fillText(p.symbol, p.x, p.y);
+
+        // Render PNGs if available; fallback to emojis
+        if (p.type === 'hearts') {
+          if (heartImg.complete && heartImg.naturalWidth > 0) {
+            ctx.drawImage(heartImg, p.x, p.y, p.size, p.size);
+          } else {
+            ctx.font = `${p.size}px sans-serif`;
+            ctx.fillText('❤️', p.x, p.y);
+          }
+        } else if (p.type === 'farts') {
+          if (fartImg.complete && fartImg.naturalWidth > 0) {
+            ctx.drawImage(fartImg, p.x, p.y, p.size, p.size);
+          } else {
+            ctx.font = `${p.size}px sans-serif`;
+            ctx.fillText('💨', p.x, p.y);
+          }
+        }
 
         if (p.alpha <= 0) particles.splice(i, 1);
       }
@@ -373,7 +462,18 @@
     renderParticles();
 
     /* ==========================================================================
-       5. DRAGGABLE WINDOWS CONTROLLER
+       5. EASTER EGGS: DO NOT CLICK & RAVE MODE
+       ========================================================================== */
+    function doNotClickChallenge() {
+      document.body.classList.toggle('rave-mode');
+      triggerParticles('farts', 40);
+      playCuteSound();
+      updateStat('stat-secrets', 1);
+      alert('⚠️ RAVE MODE ACTIVATED! ⚠️');
+    }
+
+    /* ==========================================================================
+       6. DRAGGABLE WINDOWS CONTROLLER
        ========================================================================== */
     function initDraggableWindows() {
       const windows = document.querySelectorAll('.window');
@@ -386,7 +486,6 @@
           pos3 = e.clientX;
           pos4 = e.clientY;
 
-          // Bring active window to front
           windows.forEach(w => w.style.zIndex = "1");
           win.style.zIndex = "10";
 
@@ -409,11 +508,11 @@
     }
 
     /* ==========================================================================
-       6. JSONBIN GUESTBOOK DATA ENGINE
+       7. JSONBIN GUESTBOOK DATA ENGINE
        ========================================================================== */
     async function fetchEntries() {
       if (BIN_ID === 'YOUR_JSONBIN_BIN_ID') {
-        entriesContainer.innerHTML = '<p style="color:red;">Enter your BIN_ID and API_KEY in the code to sync live database entries.</p>';
+        entriesContainer.innerHTML = '<p style="color:red;">Enter your BIN_ID and API_KEY to sync live posts.</p>';
         return;
       }
 
@@ -459,17 +558,15 @@
       if (!author || !message) return;
 
       statusMsg.style.color = 'black';
-      statusMsg.textContent = 'Sending to guestbook...';
+      statusMsg.textContent = 'Posting to guestbook...';
 
       try {
-        // Fetch existing entries array
         const getRes = await fetch(`${API_URL}/latest`, {
           headers: { 'X-Access-Key': API_KEY }
         });
         const currentData = await getRes.json();
         const currentEntries = Array.isArray(currentData.record?.entries) ? currentData.record.entries : [];
 
-        // Build new entry
         const now = new Date();
         const newEntry = {
           author,
@@ -478,7 +575,6 @@
         };
         currentEntries.push(newEntry);
 
-        // Put request back to JSONBin
         const putRes = await fetch(API_URL, {
           method: 'PUT',
           headers: {
@@ -488,13 +584,12 @@
           body: JSON.stringify({ entries: currentEntries })
         });
 
-        if (!putRes.ok) throw new Error('Database PUT write failed');
+        if (!putRes.ok) throw new Error('Database write failed');
 
         statusMsg.style.color = 'green';
-        statusMsg.textContent = 'Post published successfully!';
+        statusMsg.textContent = 'Posted successfully!';
         form.reset();
 
-        // Fire audio, particle burst & achievements
         playCuteSound();
         triggerParticles('hearts', 25);
         updateStat('stat-posts', 1);
@@ -504,12 +599,12 @@
       } catch (err) {
         console.error(err);
         statusMsg.style.color = 'red';
-        statusMsg.textContent = 'Error writing entry. Check network or API configuration.';
+        statusMsg.textContent = 'Error writing entry. Check network or API key.';
       }
     });
 
     /* ==========================================================================
-       7. UTILITIES & METRICS
+       8. UTILITIES & METRICS
        ========================================================================== */
     function escapeHTML(str) {
       return String(str).replace(/[&<>'"]/g, 
@@ -524,7 +619,6 @@
       }
     }
 
-    // Fake retro hit counter increment
     function initHitCounter() {
       const countEl = document.getElementById('hit-counter');
       let val = Math.floor(Math.random() * 50) + 400;
@@ -532,7 +626,7 @@
     }
 
     /* ==========================================================================
-       8. INITIALIZATION BOOTSTRAP
+       9. BOOTSTRAP INITIALIZATION
        ========================================================================== */
     window.addEventListener('DOMContentLoaded', () => {
       initAudioEngine();
